@@ -21,7 +21,7 @@ resource "aws_subnet" "subnet_pub" {
     availability_zone = "${var.availability_zone}"
 
     tags {
-      Name = "Public Subnet"
+      Name = "${var.public_subnet_name}"
     }
 }
 
@@ -31,22 +31,21 @@ resource "aws_subnet" "subnet_priv" {
     availability_zone = "${var.availability_zone}"
 
     tags {
-      Name = "Private Subnet"
+      Name = "${var.private_subnet_name}"
     }
 }
 
 #Create NAT instance
-resource "aws_instance" "nat" {
-    ami = "${var.nat_ami}" # this is a special ami preconfigured to do NAT
-    availability_zone = "${var.availability_zone}"
-    instance_type = "${var.nat_type}"
-    key_name = "${var.aws_key_name}"
-    vpc_security_group_ids = ["${aws_security_group.nat.id}"]
-    subnet_id = "${aws_subnet.subnet_pub.id}"
-    associate_public_ip_address = true
-    source_dest_check = false
-
-    tags {
-        Name = "VPC NAT"
-    }
-}
+#resource "aws_instance" "nat" {
+#    ami = "${var.nat_ami}" # this is a special ami preconfigured to do NAT
+#    availability_zone = "${var.availability_zone}"
+#    instance_type = "${var.nat_type}"
+#    key_name = "${var.aws_key_name}"
+#    vpc_security_group_ids = ["${aws_security_group.nat.id}"]
+#    subnet_id = "${aws_subnet.subnet_pub.id}"
+#    associate_public_ip_address = true
+#    source_dest_check = false
+#
+#    tags {
+#        Name = "VPC NAT"
+#    }
