@@ -1,16 +1,17 @@
 #Configure provider
 provider "aws" {
   region     = "${var.region}"
+  profile    = "${var.profile}"
 }
 
 #Configure remote state
-data "terraform_remote_state" "eos_scratch" {
+data "terraform_remote_state" "eos_remote_state" {
   backend = "s3"
       config {
         bucket = "${var.state_bucket_name}"
         key    = "${var.state_key_path}"
         region = "${var.region}"
-        profile = "${var.state_profile_name}"
+        profile = "${var.profile}"
       }
 }
 

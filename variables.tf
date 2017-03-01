@@ -3,6 +3,9 @@
 variable "region" {
   default = "us-west-1"
 }
+variable profile {
+  default = "default"
+}
 
 variable state_bucket_name {
   default = "eos-terraform-state"
@@ -10,10 +13,6 @@ variable state_bucket_name {
 variable state_key_path {
   default = "terraform.tfstate"
 }
-variable state_profile_name {
-  default = "default"
-}
-
 
 #variables for
 variable "availability_zone" {
