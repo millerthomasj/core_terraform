@@ -1,9 +1,23 @@
+#variables for provider and state
+
 variable access_key  {}
 variable secret_key {}
 variable "region" {
   default = "us-west-1"
 }
 
+variable state_bucket_name {
+  default = "eos-terraform-state"
+}
+variable state_key_path {
+  default = "terraform.tfstate"
+}
+variable state_profile_name {
+  default = "default"
+}
+
+
+#variables for
 variable "availability_zone" {
   default = "us-west-1b"
 }

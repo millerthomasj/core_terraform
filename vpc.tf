@@ -1,7 +1,19 @@
+#Configure provider
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
   region     = "${var.region}"
+}
+
+#Configure remote state
+data "terraform_remote_state" "eos_scratch" {
+  backend = "s3"
+      config {
+        bucket = "${var.state_bucket_name}"
+        key    = "${var.state_key_path}"
+        region = "${var.region}"
+        profile = "${var.state_profile_name}"
+      }
 }
 
 #Define the main vpc
