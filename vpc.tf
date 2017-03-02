@@ -15,48 +15,15 @@ data "terraform_remote_state" "eos_remote_state" {
       }
 }
 
-#Define the main vpc
-resource "aws_vpc" "main" {
-    cidr_block = "${var.vpc_cidr_block}"
-    instance_tenancy= "dedicated"
-    enable_dns_hostnames = true
-    tags {
-      Name = "${var.vpc_name}"}
+module "vpc" {
+    source = "github.com/terraform-community-modules/tf_aws_vpc"
+    name =  "${var.name}"
+    cidr =  "${var.cidr}"
+    azs = "${var.azs}"
+    private_subnets = "${var.private_subnets}"
+    public_subnets = "${var.public_subnets}"
+    enable_nat_gateway = "${var.enable_nat_gateway}"
+    enable_dns_support = "${var.enable_dns_support}"
+    enable_dns_hostnames = "${var.enable_dns_hostnames}"
+    tags {}
 }
-
-#Create subnets
-
-resource "aws_subnet" "subnet_pub" {
-    vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "${var.public_cidr_block}"
-    availability_zone = "${var.availability_zone}"
-
-    tags {
-      Name = "${var.public_subnet_name}"
-    }
-}
-
-resource "aws_subnet" "subnet_priv" {
-    vpc_id = "${aws_vpc.main.id}"
-    cidr_block = "${var.private_cidr_block}"
-    availability_zone = "${var.availability_zone}"
-
-    tags {
-      Name = "${var.private_subnet_name}"
-    }
-}
-
-#Create NAT instance
-#resource "aws_instance" "nat" {
-#    ami = "${var.nat_ami}" # this is a special ami preconfigured to do NAT
-#    availability_zone = "${var.availability_zone}"
-#    instance_type = "${var.nat_type}"
-#    key_name = "${var.aws_key_name}"
-#    vpc_security_group_ids = ["${aws_security_group.nat.id}"]
-#    subnet_id = "${aws_subnet.subnet_pub.id}"
-#    associate_public_ip_address = true
-#    source_dest_check = false
-#
-#    tags {
-#        Name = "VPC NAT"
-#    }
