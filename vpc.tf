@@ -9,7 +9,7 @@ data "terraform_remote_state" "eos_remote_state" {
   backend = "s3"
       config {
         bucket = "${var.state_bucket_name}"
-        key    = "${var.state_key_path}"
+        key    = "${var.profile}.${var.state_key_path}"
         region = "${var.region}"
         profile = "${var.profile}"
       }
