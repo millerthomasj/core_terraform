@@ -58,13 +58,16 @@ variable "map_public_ip_on_launch" {
 }
 
 variable "private_propagating_vgws" {
-  default = ""
+  type     = "list"
+  default = [""]
 }
 
 variable "public_propagating_vgws" {
-  default = ""
+  type     = "list"
+  default = [""]
 }
 
 variable "tags" {
-  default = ""
+  type     = "list"
+  default = [""]
 }
