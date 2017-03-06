@@ -13,10 +13,6 @@ variable "private_subnets" { type = "list" }
 ## declare global variables
 
 variable "state_bucket_name" { default = "eos-terraform-state" }
-variable "global_state_file" { default = "global.tfstate" }
-variable "prod_state_file" { default = "production.tfstate" } # TODO: make init.sh use these variables
-variable "staging_state_file" { default = "staging.tfstate" }
-variable "development_state_file" { default = "development.tfstate" }
 
 variable "region" { default = "us-west-1" }
 variable "acct_number" { default = "" }
