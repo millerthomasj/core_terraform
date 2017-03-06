@@ -3,21 +3,14 @@
 variable "env" { } 
 variable "name" { } 
 
-variable "azs" { }
+variable "azs" { type = "list" }
 variable "cidr" { } 
 variable "instance_type" { } 
 
-variable "public_subnets" { } 
-variable "private_subnets" { } 
-
-variable "subdomain_int_name" { } 
-variable "subdomain_ext_name" { } 
+variable "public_subnets" { type = "list" } 
+variable "private_subnets" { type = "list" } 
 
 ## declare global variables
-
-provider "aws" {
-    region = "us-west-1"
-}
 
 variable "state_bucket_name" { default = "eos-terraform-state" }
 variable "global_state_file" { default = "global.tfstate" }

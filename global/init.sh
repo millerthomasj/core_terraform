@@ -11,7 +11,7 @@ tf_env="global"
 region="us-west-1"
 
 terraform remote config -backend=s3 \
-                        -backend-config="bucket=hound-terraform-state" \
+                        -backend-config="bucket=eos-terraform-state" \
                         -backend-config="key=$tf_env.tfstate" \
                         -backend-config="region=$region"
 
