@@ -7,7 +7,7 @@
 # terraform plan  -var-file=./production.tfvars 
 # terraform apply -var-file=./production.tfvars 
 
-tf_env="global"
+tf_env="staging"
 region="us-west-1"
 
 terraform remote config -backend=s3 \

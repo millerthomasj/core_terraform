@@ -1,73 +1,47 @@
-#variables for provider and state
+## declare all the env-specific variables that are defined in *.tfvars
 
-variable "region" {
-  default = "us-west-1"
-}
+variable "env" { } 
+variable "name" { } 
 
-variable "availability_zone" {
-  default = "us-west-1b"
-}
+variable "azs" { }
+variable "cidr" { } 
+variable "instance_type" { } 
 
-variable profile {
-  default = "scratch"
-}
+variable "public_subnets" { } 
+variable "private_subnets" { } 
 
-variable state_bucket_name {
-  default = "eos-terraform-state"
-}
+variable "subdomain_int_name" { } 
+variable "subdomain_ext_name" { } 
 
-variable state_key_path {
-  default = "vpc.tfstate"
-}
+## declare global variables
 
-#variables for VPC module (https://github.com/terraform-community-modules/tf_aws_vpc)
-variable "name" {
-  default = "EOS VPC"
-}
-variable "cidr" {
-  default = "10.0.0.0/16"
-}
-variable "public_subnets" {
-  type     = "list"
-  default = ["10.0.1.0/24"]
-}
-variable "private_subnets" {
-  type     = "list"
-  default = ["10.0.2.0/24"]
+provider "aws" {
+    region = "us-west-1"
 }
 
-variable "azs" {
-  type     = "list"
-  default = ["us-west-1b"]
-}
+variable "state_bucket_name" { default = "eos-terraform-state" }
+variable "global_state_file" { default = "global.tfstate" }
+variable "prod_state_file" { default = "production.tfstate" } # TODO: make init.sh use these variables
+variable "staging_state_file" { default = "staging.tfstate" }
+variable "development_state_file" { default = "development.tfstate" }
 
-variable "enable_dns_hostnames" {
-  default = "true"
-}
+variable "region" { default = "us-west-1" }
+variable "acct_number" { default = "" }
 
-variable "enable_dns_support" {
-  default = "true"
-}
-
-variable "enable_nat_gateway" {
-  default = "true"
-}
-
-variable "map_public_ip_on_launch" {
-  default = "false"
-}
-
+# VPC specific variables
+variable "enable_dns_hostnames" { default = "true" }
+variable "enable_dns_support" { default = "true" }
+variable "enable_nat_gateway" { default = "true" }
+variable "map_public_ip_on_launch" { default = "false" }
 variable "private_propagating_vgws" {
   type     = "list"
   default = [""]
 }
-
 variable "public_propagating_vgws" {
   type     = "list"
   default = [""]
 }
-
 variable "tags" {
   type     = "list"
-  default = [""]
+  default = ["terraform"]
 }
