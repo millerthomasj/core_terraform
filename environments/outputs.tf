@@ -1,1 +1,3 @@
-# Create empty file
+output "azs" {
+   value = [ "${var.azs}" ]
+}
