@@ -7,15 +7,10 @@
 # terraform plan  -var-file=./production.tfvars 
 # terraform apply -var-file=./production.tfvars 
 
-tf_env=$(printenv | grep ENVIRONMENT)
+tf_env=$(git branch | grep '\*' | awk '{ print $2 }')
 
-if [ $? -ne 0 ] ; then
-   echo "The environment variable ENVIRONMENT is not set as one of the following:"
-   echo "   - scratch"
-   echo "   - development"
-   echo "   - staging"
-   echo "   - production"
-   exit 1
+if [ ! -z $ENVIRONMENT ] && [ "$ENVIRONMENT" != "" ] ; then
+   tf_env=$ENVIRONMENT
 fi
 
 region="us-west-1"
