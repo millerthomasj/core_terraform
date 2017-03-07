@@ -18,6 +18,7 @@ variable "region" { default = "us-west-1" }
 variable "acct_number" { default = "" }
 
 # VPC specific variables
+variable "vpc_module_ref" { default = "v1.0.2" }
 variable "enable_dns_hostnames" { default = "true" }
 variable "enable_dns_support" { default = "true" }
 variable "enable_nat_gateway" { default = "true" }
@@ -29,8 +30,4 @@ variable "private_propagating_vgws" {
 variable "public_propagating_vgws" {
   type     = "list"
   default = [""]
-}
-variable "tags" {
-  type     = "list"
-  default = ["terraform"]
 }
