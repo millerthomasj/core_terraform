@@ -1,44 +1,36 @@
-resource "aws_iam_role" "consul_role" {
-  name = "consul-role"
+data "aws_iam_policy_document" "instance-assume-role-policy" {
+  statement {
+    actions = [ "sts:AssumeRole" ]
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2008-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
+    principals {
+      type = "Service"
+      identifiers = ["ec2.amazonaws.com"]
     }
-  ]
+  }
 }
-EOF
+
+resource "aws_iam_role" "ecs_instance_role" {
+  name = "${var.project}-ecs-instance-role"
+
+  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-resource "aws_iam_instance_profile" "consul_profile" {
-  name = "consul-profile"
-  roles = [
-    "${aws_iam_role.consul_role.id}"]
+resource "aws_iam_instance_profile" "ecs_instance_profile" {
+  name = "${var.project}-ecs-instance-profile"
+  roles = [ "${aws_iam_role.ecs_instance_role.id}"]
 
   lifecycle {
     create_before_destroy = true
   }
-
-  provisioner "local-exec" {
-    command = "sleep 30"
-  }
 }
 
-resource "aws_iam_role_policy" "consul_permissions" {
-  name = "consul-permissions"
-  role = "${aws_iam_role.consul_role.id}"
+resource "aws_iam_role_policy" "ecs_instance_permissions" {
+  name = "${var.project}-ecs-instance-permissions"
+  role = "${aws_iam_role.ecs_instance_role.id}"
 
   policy = <<EOF
 {

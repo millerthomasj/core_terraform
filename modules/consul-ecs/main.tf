@@ -1,13 +1,17 @@
-resource "aws_ecs_cluster" "consul" {
-  name = "consul-discovery"
+# Create the ECS cluster for consul
+resource "aws_ecs_cluster" "autodiscovery" {
+  name = "${var.project}-autodiscovery"
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-resource "aws_launch_configuration" "consul" {
-  name_prefix = "consul-launch-"
+# Create Consul server group (which will also be on ECS node(s)
+
+#  # Create launch configuration
+resource "aws_launch_configuration" "consul_server" {
+  name_prefix = "${var.project}-consul-server-"
   image_id = "${lookup(var.ami, var.region)}"
   instance_type = "${var.instance_type}"
   key_name = "${var.keypair}"
@@ -16,34 +20,75 @@ resource "aws_launch_configuration" "consul" {
     "${aws_security_group.consul_sg.id}",
     "${aws_security_group.docker_sg.id}"]
 
-  iam_instance_profile = "${aws_iam_instance_profile.consul_profile.name}"
+  iam_instance_profile = "${aws_iam_instance_profile.ecs_instance_profile.name}"
 
-  root_block_device {
-    volume_type = "gp2"
-    volume_size = 10
-  }
-
-  ebs_block_device {
-    device_name = "/dev/xvdcz"
-    volume_size = 22
-    volume_type = "gp2"
-  }
+  user_data = "${data.template_cloudinit_config.autodiscovery_cloudinit.rendered}"
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-resource "aws_autoscaling_group" "consul" {
-  name = "consul-autoscaling"
-  availability_zones = "${var.azs}"
-  launch_configuration = "${aws_launch_configuration.consul.name}"
-  desired_capacity = 1
-  min_size = 1
-  max_size = 1
+#  # Create autoscaling group
+resource "aws_autoscaling_group" "consul_server" {
+  name = "${var.project}-consul-servers"
+  launch_configuration = "${aws_launch_configuration.consul_server.name}"
+  desired_capacity = "${var.consul_servers_desired}"
+  min_size = "${var.consul_servers_min}"
+  max_size = "${var.consul_servers_max}"
+  vpc_zone_identifier = [ "${var.zones}" ]
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  tag {
+    key = "Name"
+    value = "${var.project}-discovery"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key = "autodiscovery-key"
+    value = "${var.uniquekey}"
+    propagate_at_launch = true
+  }
+}
+#  # scaling policy
+# Create task definition to start consul agent on every ECS node
+# Create task definition to start registrator/nomad on every ECS node
+
+data "template_file" "autodiscovery" {
+  template = "${file("${path.module}/templates/cluster.tpl")}"
+
+  vars {
+    clustername = "${aws_ecs_cluster.autodiscovery.name}"
+  }
+}
+
+data "template_file" "consulserver" {
+  template = "${file("${path.module}/templates/consul.tpl")}"
+
+  vars {
+    clusterkey = "${var.uniquekey}"
+    environment = "${var.environment}"
+    config = "server"
+    ui = "false"
+  }
+}
+
+data "template_cloudinit_config" "autodiscovery_cloudinit" {
+  gzip = false
+  base64_encode = false
+
+  part {
+    content_type = "text/x-shellscript"
+    content = "${data.template_file.autodiscovery.rendered}"
+  }
+
+  part {
+    content_type = "text/x-shellscript"
+    content = "${data.template_file.consulserver.rendered}"
   }
 }
 
@@ -120,12 +165,11 @@ EOF
     name = "consulconfig"
     host_path = "/var/consul/conf"
   }
-
 }
 
 resource "aws_ecs_service" "consul_server" {
-  name = "consul-server"
-  cluster = "${aws_ecs_cluster.consul.id}"
+  name = "${var.project}-consul-server"
+  cluster = "${aws_ecs_cluster.autodiscovery.id}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
-  desired_count = "1"
+  desired_count = "${var.consul_servers_desired}"
 }

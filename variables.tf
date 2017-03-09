@@ -13,6 +13,7 @@ variable "private_subnets" { type = "list" }
 ## declare global variables
 
 variable "state_bucket_name" { default = "eos-terraform-state" }
+variable "group_name" { default = "EOS" }
 
 variable "region" { default = "us-west-1" }
 variable "acct_number" { default = "" }
@@ -31,3 +32,9 @@ variable "public_propagating_vgws" {
   type     = "list"
   default = [""]
 }
+
+# Consul specific variables
+variable "consul_servers_min" {}
+variable "consul_servers_max" {}
+variable "consul_servers_desired" {}
+variable "consul_key" {}

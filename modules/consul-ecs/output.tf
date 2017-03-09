@@ -1,3 +1,3 @@
 output "cluster" {
-  value = "${aws_ecs_cluster.consul.id}"
+  value = "${aws_ecs_cluster.autodiscovery.id}"
 }
