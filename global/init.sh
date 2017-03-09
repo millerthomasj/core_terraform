@@ -12,7 +12,7 @@ region="us-west-1"
 
 terraform remote config -backend=s3 \
                         -backend-config="bucket=eos-terraform-state" \
-                        -backend-config="key=$tf_env.tfstate" \
+                        -backend-config="key=core/$tf_env.tfstate" \
                         -backend-config="region=$region"
 
 echo "set remote s3 state to $tf_env.tfstate"

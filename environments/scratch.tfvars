@@ -1,4 +1,4 @@
-env = "scratch"
+environment = "scratch"
 name = "EOS Scratch"
 
 azs = [ "us-west-1a", "us-west-1b" ]

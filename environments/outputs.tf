@@ -1,5 +1,5 @@
-output "env" {
-  value = "${var.env}"
+output "environment" {
+  value = "${var.environment}"
 }
 
 output "region" {
@@ -7,9 +7,9 @@ output "region" {
 }
 
 output "azs" {
-   value = [ "${var.azs}" ]
+  value = [ "${var.azs}" ]
 }
 
 output "vpc_id" {
-    value = "${module.vpc.vpc_id}"
+  value = "${module.vpc.vpc_id}"
 }

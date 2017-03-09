@@ -1,7 +1,7 @@
 #Configure provider
 provider "aws" {
   region     = "${var.region}"
-  profile    = "${var.env}"
+  profile    = "${var.environment}"
 }
 
 module "vpc" {
@@ -20,6 +20,6 @@ module "vpc" {
 
   tags {
     "Terraform" = "true"
-    "Environment" = "${var.env}"
+    "Environment" = "${var.environment}"
   }
 }

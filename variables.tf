@@ -1,6 +1,6 @@
 ## declare all the env-specific variables that are defined in *.tfvars
 
-variable "env" { } 
+variable "environment" { } 
 variable "name" { } 
 
 variable "azs" { type = "list" }
