@@ -57,21 +57,27 @@ resource "aws_security_group" "consul_sg" {
   }
 }
 
-# I believe this should be bubbled up and have the private subnets allowed to access
-resource "aws_security_group" "docker_sg" {
-  name = "docker-sg"
-  description = "Security group for the EC2 instances to access docker"
-  vpc_id = "${var.vpc}"
+resource "aws_security_group" "ecs" {
+  name = "ecs-sg"
+  description = "Container Instance Allowed Ports"
+  vpc_id      = "${var.vpc}"
 
   ingress {
-    from_port = 32768
-    to_port = 61000
-    protocol = "tcp"
-    cidr_blocks = [
-      "0.0.0.0/0"]
+    from_port = 1
+    to_port   = 65535
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags {
+    "Name" = "ecs-sg"
     "Terraform" = "true"
     "Environment" = "${var.environment}"
   }
@@ -179,3 +185,24 @@ resource "aws_security_group" "consul" {
   }
 }
 
+resource "aws_security_group" "load_balancers" {
+  name = "load_balancers"
+  description = "Allows all traffic"
+  vpc_id = "${var.vpc}"
+
+  # TODO: do we need to allow ingress besides TCP 80 and 443?
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # TODO: this probably only needs egress to the ECS security group.
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

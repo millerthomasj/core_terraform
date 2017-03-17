@@ -17,6 +17,7 @@ variable "keypair" {
 
 variable "zones" { type = "list" }
 
+variable "consul_version" { default = "0.7.0" }
 variable "consul_servers_min" { default = 3 }
 variable "consul_servers_max" { default = 5 }
 variable "consul_servers_desired" { default = 3 }

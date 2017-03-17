@@ -34,6 +34,7 @@ variable "public_propagating_vgws" {
 }
 
 # Consul specific variables
+variable "consul_version" {}
 variable "consul_servers_min" {}
 variable "consul_servers_max" {}
 variable "consul_servers_desired" {}

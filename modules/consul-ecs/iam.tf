@@ -1,71 +1,28 @@
-data "aws_iam_policy_document" "instance-assume-role-policy" {
-  statement {
-    actions = [ "sts:AssumeRole" ]
-
-    principals {
-      type = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
+/* ecs iam role and policies */
+resource "aws_iam_role" "ecs_role" {
+  name               = "ecs_role"
+  assume_role_policy = "${file("${path.module}/policies/ecs-role.json")}"
 }
 
-resource "aws_iam_role" "ecs_instance_role" {
-  name = "${var.project}-ecs-instance-role"
-
-  assume_role_policy = "${data.aws_iam_policy_document.instance-assume-role-policy.json}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
+/* ecs service scheduler role */
+resource "aws_iam_role_policy" "ecs_service_role_policy" {
+  name     = "ecs_service_role_policy"
+  policy   = "${file("${path.module}/policies/ecs-service-role-policy.json")}"
+  role     = "${aws_iam_role.ecs_role.id}"
 }
 
-resource "aws_iam_instance_profile" "ecs_instance_profile" {
-  name = "${var.project}-ecs-instance-profile"
-  roles = [ "${aws_iam_role.ecs_instance_role.id}"]
-
-  lifecycle {
-    create_before_destroy = true
-  }
+/* ec2 container instance role & policy */
+resource "aws_iam_role_policy" "ecs_instance_role_policy" {
+  name     = "ecs_instance_role_policy"
+  policy   = "${file("${path.module}/policies/ecs-instance-role-policy.json")}"
+  role     = "${aws_iam_role.ecs_role.id}"
 }
 
-resource "aws_iam_role_policy" "ecs_instance_permissions" {
-  name = "${var.project}-ecs-instance-permissions"
-  role = "${aws_iam_role.ecs_instance_role.id}"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecs:CreateCluster",
-        "ecs:DeregisterContainerInstance",
-        "ecs:DiscoverPollEndpoint",
-        "ecs:Poll",
-        "ecs:RegisterContainerInstance",
-        "ecs:StartTelemetrySession",
-        "ecs:Submit*",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:BatchGetImage",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:GetAuthorizationToken",
-        "cloudwatch:DescribeAlarms",
-        "cloudwatch:PutMetricAlarm",
-        "cloudwatch:PutMetricData",
-        "cloudwatch:GetMetricStatistics",
-        "cloudwatch:ListMetrics",
-        "ec2:Describe*",
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:DescribeLogGroups",
-        "logs:DescribeLogStreams",
-        "logs:PutLogEvents",
-        "route53:ChangeResourceRecordSets"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
+/**
+ * IAM profile to be used in auto-scaling launch configuration.
+ */
+resource "aws_iam_instance_profile" "ecs" {
+  name = "ecs-instance-profile"
+  path = "/"
+  roles = ["${aws_iam_role.ecs_role.name}"]
 }

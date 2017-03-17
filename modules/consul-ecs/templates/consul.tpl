@@ -30,7 +30,7 @@ serverconf() {
   "data_dir": "/consul/data",
   "client_addr": "0.0.0.0",
   "advertise_addr": "$IPADDR",
-  "bootstrap_expect": 3,
+  "bootstrap_expect": ${desired_count},
   "log_level": "INFO",
   "node_name": "$HOST_NAME",
   "server": true,
