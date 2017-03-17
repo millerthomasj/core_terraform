@@ -34,7 +34,7 @@ serverconf() {
   "log_level": "INFO",
   "node_name": "$HOST_NAME",
   "server": true,
-  "ui": true,
+  "ui": ${ui},
   "addresses": {
     "https": "0.0.0.0"
   },
