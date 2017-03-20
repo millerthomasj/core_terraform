@@ -22,7 +22,7 @@ data "template_file" "consulserver" {
     clusterkey = "${var.uniquekey}"
     environment = "${var.environment}"
     config = "server"
-    ui = "true"
+    ui = "false"
     desired_count = "${var.consul_servers_desired}" 
   }
 }

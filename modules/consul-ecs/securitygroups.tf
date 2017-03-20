@@ -192,10 +192,17 @@ resource "aws_security_group" "load_balancers" {
 
   # TODO: do we need to allow ingress besides TCP 80 and 443?
   ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["${var.allow_access}"]
+  }
+
+  ingress {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.private_subnets}"]
   }
 
   # TODO: this probably only needs egress to the ECS security group.

@@ -30,7 +30,7 @@ resource "aws_ecs_service" "consul_server" {
 resource "aws_elb" "consul" {
   name = "consul"
   security_groups = ["${aws_security_group.load_balancers.id}"]
-  subnets = ["${var.zones}"]
+  subnets = ["${var.private_zones}"]
 
   listener {
     lb_protocol = "http"
@@ -44,7 +44,7 @@ resource "aws_elb" "consul" {
     healthy_threshold = 3
     unhealthy_threshold = 2
     timeout = 3
-    target = "HTTP:8500/ui/"
+    target = "HTTP:8500/"
     interval = 10
   }
 

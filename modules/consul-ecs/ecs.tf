@@ -37,7 +37,7 @@ resource "aws_autoscaling_group" "consul_server" {
   desired_capacity = "${var.consul_servers_desired}"
   min_size = "${var.consul_servers_min}"
   max_size = "${var.consul_servers_max}"
-  vpc_zone_identifier = [ "${var.zones}" ]
+  vpc_zone_identifier = [ "${var.private_zones}" ]
   termination_policies = ["OldestLaunchConfiguration"]
 
   lifecycle {

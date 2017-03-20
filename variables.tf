@@ -12,6 +12,8 @@ variable "private_subnets" { type = "list" }
 
 ## declare global variables
 
+# 56nat.mystrotv.com
+variable "allow_vpn" { default = "207.93.212.56/32" }
 variable "state_bucket_name" { default = "eos-terraform-state" }
 variable "group_name" { default = "EOS" }
 
