@@ -1,9 +1,3 @@
-#Configure provider
-provider "aws" {
-  region     = "${var.region}"
-  profile    = "${var.environment}"
-}
-
 module "vpc" {
   source = "github.com/terraform-community-modules/tf_aws_vpc"
 

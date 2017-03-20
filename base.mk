@@ -2,15 +2,16 @@ ENVIRONMENT ?= production
 BUCKET ?= eos-terraform-state
 REGION ?= us-west-1
 STACK ?= core
+ENV := $(shell git rev-parse --abbrev-ref HEAD)
 
-%-plan: %.tfvars .terraform/terraform.tfstate
-	terraform plan -var-file=$(*).tfvars -out $(*).plan
+%-plan: *.tfvars .terraform/terraform.tfstate
+	terraform plan -var-file=$(ENV).tfvars -out $(*).plan
 
 %-apply: %.plan
 	terraform apply $(*).plan
 
-%-destroy: %.tfvars .terraform
-	terraform plan -destroy -var-file=$(*).tfvars -out $(*).plan
+%-destroy: *.tfvars .terraform
+	terraform plan -destroy -var-file=$(ENV).tfvars -out $(*).plan
 	terraform apply $(*).plan
 
 plan: $(ENVIRONMENT)-plan

@@ -10,6 +10,8 @@ variable "instance_type" { }
 variable "public_subnets" { type = "list" } 
 variable "private_subnets" { type = "list" } 
 
+variable "local_domain" { }
+
 ## declare global variables
 
 # 56nat.mystrotv.com
