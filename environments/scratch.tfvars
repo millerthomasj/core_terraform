@@ -1,19 +1,16 @@
+## declare all the env-specific variables that are defined in *.tfvars
+
+region = "us-west-1"
 environment = "scratch"
-name = "EOS Scratch"
+dns_zone = "eos.local"
 
-azs = [ "us-west-1a", "us-west-1b" ]
-cidr = "10.0.0.0/16"
-instance_type = ""
+# VPC ID may change as people destroy and recreate scratch VPC
+vpc_id = "vpc-bc2488d8"
+availability_zones = [ "us-west-1a", "us-west-1b" ]
+private_subnet_ids = [ "subnet-573bb20f", "subnet-5fe6983b" ]
+private_subnet_cidrs = [ "10.0.101.0/24", "10.0.102.0/24" ]
+public_subnet_ids = [ "subnet-8625acde", "subnet-31e89655" ]
+public_subnet_cidrs = [ "10.0.1.0/24", "10.0.2.0/24" ]
 
-public_subnets = [ "10.0.1.0/24", "10.0.2.0/24" ]
-private_subnets = [ "10.0.101.0/24", "10.0.102.0/24" ]
-
-local_domain = "eos.local"
-
-consul_version = "0.7.2"
-
-consul_servers_min = 3
-consul_servers_max = 5
-consul_servers_desired = 3
-
-consul_key = "jzR9JcASngxMt7scCU57WrrTVUbYpV"
+vpc_state_bucket = "eos-terraform-state"
+vpc_state_path = "vpc/scratch.tfstate"
