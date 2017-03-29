@@ -116,13 +116,13 @@ ensure-install-dir
 
 cat > kube_env.yaml << __EOF_KUBE_ENV
 Assets:
-- 5e486d4a2700a3a61c4edfd97fb088984a7f734f@https://storage.googleapis.com/kubernetes-release/release/v1.5.2/bin/linux/amd64/kubelet
-- 10e675883b167140f78ddf7ed92f936dca291647@https://storage.googleapis.com/kubernetes-release/release/v1.5.2/bin/linux/amd64/kubectl
+- c730df934697015faa623407bc6505dff6caac59@https://storage.googleapis.com/kubernetes-release/release/v1.5.5/bin/linux/amd64/kubelet
+- 4fc1ee125e9a47695ff51ec6ef01b36cb26fe7c2@https://storage.googleapis.com/kubernetes-release/release/v1.5.5/bin/linux/amd64/kubectl
 - 19d49f7b2b99cd2493d5ae0ace896c64e289ccbb@https://storage.googleapis.com/kubernetes-release/network-plugins/cni-07a8a28637e97b22eb8dfe710eeae1344f69d16e.tar.gz
 - 661289336f118e82194000adc63f2b72f449636e@https://kubeupv2.s3.amazonaws.com/kops/1.5.3/linux/amd64/utils.tar.gz
-ClusterName: kubernetes.scratch.eos.local
-ConfigBase: s3://eos-terraform-state/core/kubernetes/kubernetes.scratch.eos.local
-InstanceGroupName: nodes
+ClusterName: eos-kubernetes.scratch-charter.net
+ConfigBase: s3://eos-terraform-state/core/kubernetes/eos-kubernetes.scratch-charter.net
+InstanceGroupName: master-us-west-1a
 Tags:
 - _automatic_upgrades
 - _aws
@@ -131,10 +131,12 @@ Tags:
 - _cni_host_local
 - _cni_loopback
 - _cni_ptp
+- _kubernetes_master
 - _kubernetes_pool
+- _networking_cni
 - _protokube
 channels:
-- s3://eos-terraform-state/core/kubernetes/kubernetes.scratch.eos.local/addons/bootstrap-channel.yaml
+- s3://eos-terraform-state/core/kubernetes/eos-kubernetes.scratch-charter.net/addons/bootstrap-channel.yaml
 protokubeImage:
   hash: 1d73d1816cd7492ce1e5a8eb7346a302982b0db2
   name: protokube:1.5.3

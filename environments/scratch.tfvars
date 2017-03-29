@@ -2,7 +2,9 @@
 
 region = "us-west-1"
 environment = "scratch"
-dns_zone = "eos.local"
+dns_zone = "scratch-charter.net"
+
+state_bucket_name = "eos-terraform-state"
 
 # VPC ID may change as people destroy and recreate scratch VPC
 vpc_id = "vpc-bc2488d8"
@@ -14,3 +16,7 @@ public_subnet_cidrs = [ "10.0.1.0/24", "10.0.2.0/24" ]
 
 vpc_state_bucket = "eos-terraform-state"
 vpc_state_path = "vpc/scratch.tfstate"
+
+k8s_cluster_name = "eos-kubernetes"
+k8s_state_path = "core/kubernetes"
+k8s_version = "1.5.5"

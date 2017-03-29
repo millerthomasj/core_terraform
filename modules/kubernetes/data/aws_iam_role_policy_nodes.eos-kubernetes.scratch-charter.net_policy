@@ -60,8 +60,8 @@
         "s3:*"
       ],
       "Resource": [
-        "arn:aws:s3:::eos-terraform-state/core/kubernetes/kubernetes.scratch.eos.local",
-        "arn:aws:s3:::eos-terraform-state/core/kubernetes/kubernetes.scratch.eos.local/*"
+        "arn:aws:s3:::eos-terraform-state/core/kubernetes/eos-kubernetes.scratch-charter.net",
+        "arn:aws:s3:::eos-terraform-state/core/kubernetes/eos-kubernetes.scratch-charter.net/*"
       ]
     },
     {
