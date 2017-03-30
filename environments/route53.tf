@@ -1,6 +1,5 @@
 data "aws_route53_zone" "primary" {
   name = "${var.dns_zone}"
-  
 }
 
 resource "aws_route53_zone" "local_zone" {
