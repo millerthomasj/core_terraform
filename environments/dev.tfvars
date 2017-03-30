@@ -2,7 +2,7 @@
 
 region = "us-west-2"
 environment = "dev"
-dns_zone = "dev-charter.net"
+dns_zone = "dev-charter.net."
 
 state_bucket_name = "eos.terraform.state"
 
