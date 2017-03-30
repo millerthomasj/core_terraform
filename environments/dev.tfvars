@@ -13,10 +13,3 @@ private_subnet_ids = [ "subnet-573bb20f", "subnet-5fe6983b" ]
 private_subnet_cidrs = [ "10.3.16.0/20", "10.3.32.0/20" ]
 public_subnet_ids = [ "subnet-8625acde", "subnet-31e89655" ]
 public_subnet_cidrs = [ "10.3.0.0/22", "10.3.4.0/22" ]
-
-vpc_state_bucket = "eos-terraform-state"
-vpc_state_path = "vpc/scratch.tfstate"
-
-k8s_cluster_name = "eos-kubernetes"
-k8s_state_path = "core/kubernetes"
-k8s_version = "1.5.5"

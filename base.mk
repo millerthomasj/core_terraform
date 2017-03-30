@@ -1,5 +1,5 @@
 ENVIRONMENT ?= production
-BUCKET ?= eos-terraform-state
+BUCKET ?= eos.terraform.state
 REGION ?= us-west-1
 STACK ?= core
 ENV := $(shell git rev-parse --abbrev-ref HEAD)
