@@ -1,31 +1,46 @@
-ENVIRONMENT ?= production
-BUCKET ?= eos.terraform.state
-REGION ?= us-west-1
-STACK ?= core
+REGION_scratch = us-west-1
+REGION_dev = us-west-2
+DNS_scratch = scratch-charter.net
+DNS_dev = dev-charter.net
+BUCKET = eos.terraform.state
 ENV := $(shell git rev-parse --abbrev-ref HEAD)
 
-%-plan: *.tfvars .terraform/terraform.tfstate
-	terraform plan -var-file=$(ENV).tfvars -out $(*).plan
+%-plan: .terraform/terraform.tfstate
+	terraform plan \
+          -var-file=$(ENV).tfvars \
+          -out $(*).plan
+	@echo
+	@echo "Run the following to set your kubectl environment properly."
+	@echo "export KUBECONFIG=~/.kube/config-$(ENV)"
 
 %-apply: %.plan
 	terraform apply $(*).plan
 
-%-destroy: *.tfvars .terraform
-	terraform plan -destroy -var-file=$(ENV).tfvars -out $(*).plan
+%-destroy: .terraform
+	terraform plan \
+          -var-file=$(ENV).tfvars \
+          -destroy -out $(*).plan
 	terraform apply $(*).plan
 
-plan: $(ENVIRONMENT)-plan
+plan: $(ENV)-plan
 
-apply: $(ENVIRONMENT)-apply
+apply: $(ENV)-apply
 
-destroy: $(ENVIRONMENT)-destroy clean
+destroy: $(ENV)-destroy clean
 
 .terraform:
 	mkdir .terraform
 	terraform get
 
 .terraform/terraform.tfstate: .terraform
-	terraform remote config -backend=s3 -backend-config="bucket=$(BUCKET)" -backend-config="key=$(STACK)/$(ENVIRONMENT).tfstate" -backend-config="region=$(REGION)"
+	terraform init \
+          -backend-config="profile=$(ENV)" \
+          -backend-config="region=$(REGION_$(ENV))" \
+          -backend-config="bucket=$(BUCKET)"
+
+clean:
+	rm -f *.plan
+	rm -rf .terraform
 
 k8sdestroy:
 	kops delete cluster \
@@ -65,9 +80,5 @@ k8s:
            --name $(shell terraform output k8s_cluster_name) \
            --state $(shell terraform output k8s_state_store) \
            --yes
-
-clean:
-	rm -f *.plan
-	rm -rf .terraform
 
 .PHONY: clean %-apply
