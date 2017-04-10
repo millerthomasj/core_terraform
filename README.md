@@ -1,3 +1,21 @@
+#Setup
+
+-tfenv, for terraform version management
+ brew install tfenv
+
+-terraform, correct version pulled by tfenv
+tfenv install
+
+-awscli for AWS commands
+brew install awscli
+
+-configure aws with access keys, output json and region us-west-1
+aws configure
+
+-edit aws configs
+~/.aws/config needs [profile scratch] section (can replace [default])
+~/.aws/credentials needs [scratch] section (can replace [default])
+
 # Build EOS Environment
 
 cd global
