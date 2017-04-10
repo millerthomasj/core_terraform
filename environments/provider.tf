@@ -1,6 +1,5 @@
 terraform {
   backend "s3" {
-    bucket = "eos.terraform.state"
     key    = "core/core.tfstate"
   }
 }

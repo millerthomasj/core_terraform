@@ -2,7 +2,8 @@ REGION_scratch = us-west-1
 REGION_dev = us-west-2
 DNS_scratch = scratch-charter.net
 DNS_dev = dev-charter.net
-BUCKET = eos.terraform.state
+BUCKET_scratch = eos.terraform.scratch
+BUCKET_dev = eos.terraform.dev
 ENV := $(shell git rev-parse --abbrev-ref HEAD)
 
 %-plan: .terraform/terraform.tfstate
@@ -36,7 +37,7 @@ destroy: $(ENV)-destroy clean
 	terraform init \
           -backend-config="profile=$(ENV)" \
           -backend-config="region=$(REGION_$(ENV))" \
-          -backend-config="bucket=$(BUCKET)"
+          -backend-config="bucket=$(BUCKET_$(ENV))"
 
 clean:
 	rm -f *.plan

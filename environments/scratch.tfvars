@@ -4,7 +4,7 @@ region = "us-west-1"
 environment = "scratch"
 dns_zone = "scratch-charter.net"
 
-state_bucket_name = "eos-terraform-state"
+state_bucket_name = "eos.terraform.scratch"
 
 # VPC ID may change as people destroy and recreate scratch VPC
 vpc_id = "vpc-bc2488d8"
