@@ -11,7 +11,7 @@ variable "private_subnets" { type = "list" }
 
 ## declare global variables
 
-variable "state_bucket_name" { default = "eos-terraform-state" }
+variable "state_bucket_name" { default = "eos.terraform.scratch" }
 variable "group_name" { default = "EOS" }
 
 variable "region" { default = "us-west-1" }
@@ -30,3 +30,11 @@ variable "public_propagating_vgws" {
   type     = "list"
   default = [""]
 }
+
+# Kubernetes variables
+variable "k8s_cluster_name" { default = "kubernetes" }
+variable "k8s_state_path" { default = "vpc/kubernetes" }
+variable "k8s_version" { default = "1.6.1" }
+variable "k8s_master_size" { default = "t2.medium" }
+variable "k8s_node_size" { default = "t2.medium" }
+variable "k8s_node_count" { default = "3" }
