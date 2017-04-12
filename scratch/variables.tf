@@ -30,3 +30,20 @@ variable "public_propagating_vgws" {
   type     = "list"
   default = [""]
 }
+
+# asg_elb specific variables
+variable "lc_name" {}
+variable "asg_ami_id" { default = "" }
+variable "instance_type" { default = "t2.micro" }
+variable "iam_instance_profile" { default = "arn:aws:iam::422152100797:instance-profile/base_iam_role_testing_spinnaker_terraform_demo_profile" }
+variable "key_name" { default = "tomtest" }
+variable "user_data" { default = "user-data.sh" }
+variable "asg_name" { default = "my-custom-asg" }
+variable "asg_number_of_instances" { default = 2 }
+variable "asg_minimum_number_of_instances" { default = 1 }
+variable "elb_names" { default = "my-elb-name" }
+variable "health_check_type" { default = "ELB" }
+variable "health_check_grace_period" { default = 300 }
+
+# sg_web specific variables
+variable "security_group_name" { default = "sg_scratch" }
