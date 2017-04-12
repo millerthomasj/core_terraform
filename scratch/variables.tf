@@ -47,3 +47,11 @@ variable "health_check_grace_period" { default = 300 }
 
 # sg_web specific variables
 variable "security_group_name" { default = "sg_scratch" }
+
+# Kubernetes variables
+variable "k8s_cluster_name" { default = "kubernetes" }
+variable "k8s_state_path" { default = "vpc/kubernetes" }
+variable "k8s_version" { default = "1.6.1" }
+variable "k8s_master_size" { default = "t2.medium" }
+variable "k8s_node_size" { default = "t2.medium" }
+variable "k8s_node_count" { default = "3" }
