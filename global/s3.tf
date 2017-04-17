@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "state" {
-  bucket = "eos.terraform.state"
+  bucket = "eos.terraform.${var.environment}"
   region = "us-west-2"
   acl    = "private"
 
