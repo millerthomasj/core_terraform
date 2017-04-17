@@ -9,3 +9,7 @@ output "dns_zone" {
 output "availability_zones" {
   value = "${join(",", var.availability_zones)}"
 }
+
+output "ns_cicd" {
+  value = "${kubernetes_namespace.cicd.metadata.0.name}"
+}
