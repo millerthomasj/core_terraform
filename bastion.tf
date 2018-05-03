@@ -9,17 +9,17 @@ data "template_file" "bastion_userdata" {
 }
 
 resource "aws_launch_configuration" "bastion_lc" {
-  name                 = "bastion"
-  image_id             = "ami-274bf658"
-  instance_type        = "c5.large"
-  user_data            = "${data.template_file.bastion_userdata.rendered}"
+  name          = "bastion"
+  image_id      = "ami-274bf658"
+  instance_type = "c5.large"
+  user_data     = "${data.template_file.bastion_userdata.rendered}"
+
   # iam_instance_profile = "${var.default_iam_profile}"
-  #security_groups = [ "${concat(list(aws_security_group.ssh_traffic.id),list(aws_security_group.monitoring_traffic.id),list(aws_security_group.allow_internal.id),list(aws_security_group.portal_ops_ssh_traffic.id))}" ]
+  # security_groups = [ "${concat(list(aws_security_group.ssh_traffic.id),list(aws_security_group.monitoring_traffic.id),list(aws_security_group.allow_internal.id),list(aws_security_group.portal_ops_ssh_traffic.id))}" ]
 
   lifecycle {
     create_before_destroy = true
   }
-
   key_name = "deploy"
 }
 
@@ -39,13 +39,13 @@ resource "aws_autoscaling_group" "bastion_asg" {
 }
 
 resource "aws_elb" "bastion_elb" {
-  name                        = "bastion"
+  name = "bastion"
 
-  //security_groups             = [ "${concat(list(aws_security_group.ssh_traffic.id),list(aws_security_group.portal_ops_ssh_traffic.id))}" ]
-  subnets                     = ["${data.aws_subnet_ids.public_subnets.ids}"]
-  internal                    = true
-  cross_zone_load_balancing   = true
-  idle_timeout                = "120"
+  # security_groups             = [ "${concat(list(aws_security_group.ssh_traffic.id),list(aws_security_group.portal_ops_ssh_traffic.id))}" ]
+  subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
+  internal                  = true
+  cross_zone_load_balancing = true
+  idle_timeout              = "120"
 
   listener {
     instance_port     = 22
@@ -61,4 +61,4 @@ resource "aws_elb" "bastion_elb" {
     target              = "TCP:22"
     interval            = 30
   }
- }
+}

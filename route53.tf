@@ -1,6 +1,6 @@
 data "aws_route53_zone" "portals" {
-  name            = "portals.${var.environment}-spectrum.net."
-  private_zone    = false
+  name            = "portals.${var.environment}.local."
+  private_zone    = true
 }
 
 resource "aws_route53_record" "bastion" {

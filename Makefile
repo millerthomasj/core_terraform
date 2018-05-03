@@ -7,7 +7,7 @@ init:
 	terraform init -backend-config=env/$(ENV).tfvars
 
 plan:
-	terraform plan -var-file='env/$(ENV).tfvars' -out=$(ENV).plan
+	terraform plan -var-file='env/$(ENV).tfvars' -var-file='env/$(ENV)-params.tfvars' -out=$(ENV).plan
 
 apply:
 	terraform apply $(ENV).plan
