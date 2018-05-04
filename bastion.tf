@@ -36,6 +36,24 @@ resource "aws_autoscaling_group" "bastion_asg" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tag {
+    key                 = "Name"
+    value               = "bastion.portals.${var.environment}-spectrum.net"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Terraform"
+    value               = true
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Application"
+    value               = "bastion"
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_elb" "bastion_elb" {
