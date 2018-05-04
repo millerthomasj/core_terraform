@@ -12,6 +12,9 @@ plan:
 apply:
 	terraform apply $(ENV).plan
 
+destroy:
+	terraform destroy -var-file='env/$(ENV).tfvars' -var-file='env/$(ENV)-params.tfvars'
+
 clean:
 	rm -Rf *.plan
 	rm -Rf .terraform
