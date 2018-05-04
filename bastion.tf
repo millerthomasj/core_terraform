@@ -11,7 +11,7 @@ data "template_file" "bastion_userdata" {
 resource "aws_launch_configuration" "bastion_lc" {
   name          = "bastion"
   image_id      = "ami-274bf658"
-  instance_type = "c5.large"
+  instance_type = "m5.large"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
   # iam_instance_profile = "${var.default_iam_profile}"
