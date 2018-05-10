@@ -37,3 +37,11 @@ output "sg_ssh_elb" {
 output "sg_ssh_bastion" {
   value = "${data.aws_security_group.ssh_bastion.id}"
 }
+
+output "devphase" {
+  value = "${var.devphase["${var.environment}"]}"
+}
+
+output "stack" {
+  value = "${var.stack["${var.environment}"]}"
+}

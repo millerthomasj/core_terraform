@@ -16,11 +16,11 @@ resource "aws_launch_configuration" "bastion_lc" {
 
   # iam_instance_profile = "${var.default_iam_profile}"
   security_groups = [ "${data.aws_security_group.ssh_elb.id}" ]
+  key_name = "deploy"
 
   lifecycle {
     create_before_destroy = true
   }
-  key_name = "deploy"
 }
 
 resource "aws_autoscaling_group" "bastion_asg" {
@@ -67,7 +67,7 @@ resource "aws_elb" "bastion_elb" {
 
   security_groups             = [ "${data.aws_security_group.ssh_pa.id}" ]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
-  internal                  = true
+  internal                  = "${var.bastion_internal}"
   cross_zone_load_balancing = true
   idle_timeout              = "120"
 
@@ -84,5 +84,12 @@ resource "aws_elb" "bastion_elb" {
     timeout             = 3
     target              = "TCP:22"
     interval            = 30
+  }
+
+  tags {                 
+    Name = "bastion.portals.${var.environment}-spectrum.net"
+    Terraform = true
+    Project = portals
+    Application = devops
   }
 }

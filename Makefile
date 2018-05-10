@@ -1,19 +1,20 @@
 ifndef ENV
-    $(error ENV is undefined, options: scratch, dev, engprod, stage, prod)
+    $(error ENV is undefined, options: dev, enguat, engqa, engprod, stage, prod)
 endif
 
 
 init:
-	terraform init -backend-config=env/$(ENV).tfvars
+        sed -e 's/ENV/$(ENV)/' provider.tpl > provider.tf
+	terraform init -backend-config=backends/$(ENV).tfvars
 
 plan:
-	terraform plan -var-file='env/$(ENV).tfvars' -var-file='env/$(ENV)-params.tfvars' -out=$(ENV).plan
+	terraform plan -var-file=env/$(ENV).tfvars -out=$(ENV).plan
 
 apply:
 	terraform apply $(ENV).plan
 
 destroy:
-	terraform destroy -var-file='env/$(ENV).tfvars' -var-file='env/$(ENV)-params.tfvars'
+	terraform destroy -var-file=env/$(ENV).tfvars
 
 clean:
 	rm -Rf *.plan

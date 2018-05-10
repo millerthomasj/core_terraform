@@ -21,9 +21,10 @@ resource "aws_route53_record" "bastion_local" {
 }
 
 resource "aws_route53_record" "bastion_public" {
+  count  = "${var.environment == "prod" || var.environment == "stage" ? 0 : 1}"
   name    = "bastion"
   zone_id = "${data.aws_route53_zone.public.zone_id}"
   type    = "A"
   ttl     = "60"
-  records = [ "69.76.31.11" ]
+  records = [ "${var.bastion_nat_ip}" ]
 }
