@@ -1,3 +1,4 @@
+variable "bucket" {}
 variable "region" {}
 variable "vpc_id" {}
 variable "environment" {}

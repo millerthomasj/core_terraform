@@ -4,7 +4,7 @@ endif
 
 
 init:
-        tfenv install
+	tfenv install
 	terraform init -backend-config=backends/$(ENV).tfvars
 
 plan:
@@ -19,4 +19,3 @@ destroy:
 clean:
 	rm -Rf *.plan
 	rm -Rf .terraform
-
