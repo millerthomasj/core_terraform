@@ -1,10 +1,10 @@
 data "aws_route53_zone" "local" {
-  name            = "${var.app_name}.${var.environment}.local."
+  name            = "${var.project}.${var.environment}.local."
   private_zone    = true
 }
 
 data "aws_route53_zone" "public" {
-  name            = "${var.app_name}.${var.environment}-spectrum.net."
+  name            = "${var.project}.${var.environment}-spectrum.net."
   private_zone    = false
 }
 

@@ -1,16 +1,42 @@
-data "template_file" "bastion_userdata" {
+data "aws_ami" "amazonlinux" {
+  most_recent = true
+
+  owners = ["137112412989"]
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*"]
+  }
+}
+
+data "template_file" "userdata" {
   template = "${file("templates/bastion.tpl")}"
 
   vars {
     name            = "bastion.portals.${var.environment}-spectrum.net"
-    hostname_prefix = "bastion"
-    domain          = ""
+    hostname_prefix = "${var.devphase["${var.environment}"]}-${var.stack["${var.environment}"]}-bastion"
+    domain          = "${aws_route53_zone.public.name}"
   }
 }
 
 resource "aws_launch_configuration" "bastion_lc" {
   name          = "bastion"
-  image_id      = "ami-274bf658"
+  image_id      = "${data.aws_ami.amazonlinux.id}"
   instance_type = "m5.large"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
@@ -89,7 +115,7 @@ resource "aws_elb" "bastion_elb" {
   tags {                 
     Name = "bastion.portals.${var.environment}-spectrum.net"
     Terraform = true
-    Project = portals
-    Application = devops
+    Project = "portals"
+    Application = "devops"
   }
 }
