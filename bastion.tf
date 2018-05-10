@@ -41,7 +41,7 @@ resource "aws_launch_configuration" "bastion_lc" {
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
   iam_instance_profile = "deploy"
-  security_groups = [ "sg-05ac9620d20a6f965" ]
+  security_groups = [ "${data.terraform_remote_state.security_groups.sg_ssh_internal}" ]
   key_name = "deploy"
 
   lifecycle {
@@ -91,7 +91,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
 resource "aws_elb" "bastion_elb" {
   name = "bastion"
 
-  security_groups             = [ "sg-05ac9620d20a6f965" ]
+  security_groups           = [ "${data.terraform_remote_state.security_groups.sg_ssh}" ]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
   internal                  = "${var.bastion_internal}"
   cross_zone_load_balancing = true
