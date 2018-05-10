@@ -24,13 +24,13 @@ data "aws_ami" "amazonlinux" {
   }
 }
 
-data "template_file" "userdata" {
+data "template_file" "bastion_userdata" {
   template = "${file("templates/bastion.tpl")}"
 
   vars {
     name            = "bastion.portals.${var.environment}-spectrum.net"
     hostname_prefix = "${var.devphase["${var.environment}"]}-${var.stack["${var.environment}"]}-bastion"
-    domain          = "${aws_route53_zone.public.name}"
+    domain          = "${data.aws_route53_zone.public.name}"
   }
 }
 
@@ -40,8 +40,8 @@ resource "aws_launch_configuration" "bastion_lc" {
   instance_type = "m5.large"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
-  # iam_instance_profile = "${var.default_iam_profile}"
-  security_groups = [ "${data.aws_security_group.ssh_elb.id}" ]
+  iam_instance_profile = "deploy"
+  security_groups = [ "sg-05ac9620d20a6f965" ]
   key_name = "deploy"
 
   lifecycle {
@@ -91,7 +91,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
 resource "aws_elb" "bastion_elb" {
   name = "bastion"
 
-  security_groups             = [ "${data.aws_security_group.ssh_pa.id}" ]
+  security_groups             = [ "sg-05ac9620d20a6f965" ]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
   internal                  = "${var.bastion_internal}"
   cross_zone_load_balancing = true

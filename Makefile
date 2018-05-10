@@ -4,7 +4,7 @@ endif
 
 
 init:
-        sed -e 's/ENV/$(ENV)/' provider.tpl > provider.tf
+	sed -e 's/ENV/$(ENV)/' provider.tpl > provider.tf
 	terraform init -backend-config=backends/$(ENV).tfvars
 
 plan:
