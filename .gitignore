@@ -2,4 +2,3 @@
 *.plan
 .terraform
 *.swp
-provider.tf
