@@ -11,8 +11,8 @@ provider "aws" {
 data "terraform_remote_state" "security_groups" {
   backend = "s3"
   config {
-    bucket  = "${var.sgs_bucket_name}"
-    key     = "${var.environment}/security_groups.tfstate"
+    bucket  = "${var.bucket}"
+    key     = "core/sgs.tfstate"
     region  = "${var.region}"
     profile = "${var.environment}"
   }
