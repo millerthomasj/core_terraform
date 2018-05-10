@@ -50,8 +50,14 @@ resource "aws_autoscaling_group" "bastion_asg" {
   }
 
   tag {
+    key                 = "Project"
+    value               = "portals"
+    propagate_at_launch = true
+  }
+
+  tag {
     key                 = "Application"
-    value               = "bastion"
+    value               = "devops"
     propagate_at_launch = true
   }
 }
