@@ -6,7 +6,6 @@ variable "project" { default = "portals" }
 variable "public_subnet_filter" {}
 variable "private_subnet_filter" {}
 
-variable "sgs_bucket_name" {}
 variable "bastion_internal" { default = false }
 variable "bastion_nat_ip" { default = "" }
 
