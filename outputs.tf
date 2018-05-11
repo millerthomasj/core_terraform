@@ -10,6 +10,14 @@ output "route53_zone_local_id" {
   value = "${data.aws_route53_zone.local.zone_id}"
 }
 
+output "private_dns_zone" {
+  value = "${var.project}.${var.environment}.local"
+}
+
+output "private_cert" {
+  value = "${data.aws_acm_certificate.portals_cert_private.arn}"
+}
+
 output "public_cert" {
   value = "${data.aws_acm_certificate.portals_cert_public.arn}"
 }
