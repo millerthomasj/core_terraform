@@ -41,7 +41,7 @@ resource "aws_launch_configuration" "bastion_lc" {
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
   iam_instance_profile = "deploy"
-  security_groups = [ "${data.terraform_remote_state.security_groups.sg_ssh_internal}" ]
+  security_groups = [ "${data.terraform_remote_state.security_groups.sg_ssh}" ]
   key_name = "deploy"
 
   lifecycle {
