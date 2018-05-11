@@ -10,6 +10,10 @@ output "route53_zone_local_id" {
   value = "${data.aws_route53_zone.local.zone_id}"
 }
 
+output "public_cert" {
+  value = "${data.aws_acm_certificate.portals_cert_public.arn}"
+}
+
 output "dns_zone" {
   value = "${var.environment == "prod" ? data.template_file.public_dns_prod.rendered : data.template_file.public_dns_nonprod.rendered}"
 }
