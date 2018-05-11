@@ -10,6 +10,9 @@ init:
 plan:
 	terraform plan -var-file=env/$(ENV).tfvars -out=$(ENV).plan
 
+refresh:
+	terraform refresh -var-file=env/$(ENV).tfvars
+
 apply:
 	terraform apply $(ENV).plan
 
