@@ -28,3 +28,17 @@ resource "aws_route53_record" "bastion_public" {
   ttl     = "60"
   records = [ "${var.bastion_nat_ip}" ]
 }
+
+data "template_file" "public_dns_prod" {
+  template = "$${dnsZone}"
+  vars {
+    dnsZone = "${var.project}.spectrum.net"
+  }
+}
+
+data "template_file" "public_dns_nonprod" {
+  template = "$${dnsZone}"
+  vars {
+    dnsZone    = "${var.project}.${var.environment}-spectrum.net"
+  }
+}

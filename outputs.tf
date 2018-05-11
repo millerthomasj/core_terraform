@@ -11,7 +11,7 @@ output "route53_zone_local_id" {
 }
 
 output "dns_zone" {
-  value = "${data.aws_route53_zone.public.name}"
+  value = "${var.environment == "prod" ? data.template_file.public_dns_prod.rendered : data.template_file.public_dns_nonprod.rendered}"
 }
 
 output "route53_zone_public_id" {

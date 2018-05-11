@@ -35,7 +35,7 @@ data "template_file" "bastion_userdata" {
 }
 
 resource "aws_launch_configuration" "bastion_lc" {
-  name          = "bastion"
+  name_prefix   = "bastion-"
   image_id      = "${data.aws_ami.amazonlinux.id}"
   instance_type = "m5.large"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
