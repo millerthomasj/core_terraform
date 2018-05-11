@@ -10,7 +10,7 @@ output "route53_zone_local_id" {
   value = "${data.aws_route53_zone.local.zone_id}"
 }
 
-output "route53_zone_public" {
+output "dns_zone" {
   value = "${data.aws_route53_zone.public.name}"
 }
 
@@ -24,6 +24,20 @@ output "private_subnet_ids" {
 
 output "public_subnet_ids" {
   value = "${data.aws_subnet_ids.public_subnets.ids}"
+}
+
+output "ssh_traffic_sg" {
+  value = "${data.terraform_remote_state.security_groups.sg_ssh_internal}"
+}
+
+output "monitoring_traffic_sg" {
+  value = "${data.terraform_remote_state.security_groups.sg_monitoring}"
+}
+
+output "web_traffic_sgs" {
+  value = [
+           "${data.terraform_remote_state.security_groups.sg_web}"
+          ]
 }
 
 output "devphase" {
