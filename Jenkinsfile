@@ -14,21 +14,19 @@ node("portals-${ENV}-slave") {
         deleteDir()
         complexCheckout('', 'https://stash.dev-charter.net/stash/scm/portals/core_terraform.git', params.branch, jenkinsCreds)
       }
-      dir('environments') {
-        stage('Make Clean') {
-//          sh "make clean"
-          sh "make init"
-        }
-        stage('Make Plan') {
-          sh "make plan"
-        }
-        if(params.branch == 'master') {
-          stage('Make Apply') {
-            timeout(time: 10, unit: 'MINUTES') {
-                input 'Is the terraform plan reasonable?'
-            }
-            sh "make apply"
+      stage('Make Clean') {
+        sh "make clean"
+        sh "make init"
+      }
+      stage('Make Plan') {
+        sh "make plan"
+      }
+      if(params.branch == 'master') {
+        stage('Make Apply') {
+          timeout(time: 10, unit: 'MINUTES') {
+              input 'Is the terraform plan reasonable?'
           }
+          sh "make apply"
         }
       }
     }
