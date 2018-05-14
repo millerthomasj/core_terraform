@@ -16,17 +16,18 @@ node("portals-${ENV}-slave") {
       }
       dir('environments') {
         stage('Make Clean') {
-          sh "make -e ENV=${ENV} clean"
+          sh "make clean"
+          sh "make init"
         }
         stage('Make Plan') {
-          sh "make -e ENV=${ENV}"
+          sh "make plan"
         }
         if(params.branch == 'master') {
           stage('Make Apply') {
             timeout(time: 10, unit: 'MINUTES') {
                 input 'Is the terraform plan reasonable?'
             }
-            sh "make -e ENV=${ENV} apply"
+            sh "make apply"
           }
         }
       }
