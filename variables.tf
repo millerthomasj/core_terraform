@@ -1,13 +1,17 @@
-variable "bucket" {}
-variable "region" {}
-variable "vpc_id" {}
-variable "environment" {}
-variable "project" { default = "portals" }
-variable "public_subnet_filter" {}
-variable "private_subnet_filter" {}
+# common vars
+variable "project_name"          { default = "portals" }
+variable "bucket"                { }
+variable "region"                { default = "us-east-1" }
+variable "env"                   { }
 
-variable "bastion_internal" { default = false }
-variable "bastion_nat_ip" { default = "" }
+# VPC & subnet vars
+variable "vpc_id"                { }
+variable "public_subnet_filter"  { default = "portals*elb*" }
+variable "private_subnet_filter" { default = "portals*app*" }
+
+# bastion vars
+variable "bastion_internal"      { default = false }
+variable "bastion_nat_ip"        { default = "" }
 
 ## Adding for portal ops compliance
 variable "devphase" {
