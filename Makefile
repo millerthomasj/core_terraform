@@ -1,5 +1,5 @@
 ifndef ENV
-    $(error ENV is undefined, options: dev, enguat, engqa, engprod, stage, prod)
+    $(error ENV is undefined, options: dev, uat, qa, engprod, stage, prod)
 endif
 
 %-plan: .terraform/terraform.tfstate
