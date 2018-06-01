@@ -11,7 +11,7 @@ output "route53_zone_local_id" {
 }
 
 output "private_dns_zone" {
-  value = "${var.project}.${var.environment}.local"
+  value = "${data.template_file.domain_local.rendered}"
 }
 
 output "private_cert" {
@@ -23,7 +23,7 @@ output "public_cert" {
 }
 
 output "dns_zone" {
-  value = "${var.environment == "prod" ? data.template_file.public_dns_prod.rendered : data.template_file.public_dns_nonprod.rendered}"
+  value = "${data.template_file.domain.rendered}"
 }
 
 output "route53_zone_public_id" {
@@ -47,15 +47,13 @@ output "monitoring_traffic_sg" {
 }
 
 output "web_traffic_sgs" {
-  value = [
-           "${data.terraform_remote_state.security_groups.sg_web}"
-          ]
+  value = ["${data.terraform_remote_state.security_groups.sg_web}"]
 }
 
 output "devphase" {
-  value = "${var.devphase["${var.environment}"]}"
+  value = "${var.devphase["${var.env}"]}"
 }
 
 output "stack" {
-  value = "${var.stack["${var.environment}"]}"
+  value = "${var.stack["${var.env}"]}"
 }
