@@ -40,7 +40,7 @@ data "template_file" "bastion_userdata" {
 }
 
 resource "aws_launch_configuration" "bastion_lc" {
-  name_prefix   = "bastion-"
+  name_prefix   = "bastion-${var.devphase["${var.env}"]}-"
   image_id      = "${data.aws_ami.amazonlinux.id}"
   instance_type = "m5.large"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
@@ -56,7 +56,7 @@ resource "aws_launch_configuration" "bastion_lc" {
 
 resource "aws_autoscaling_group" "bastion_asg" {
   depends_on           = ["aws_launch_configuration.bastion_lc"]
-  name                 = "bastion"
+  name                 = "bastion-${var.devphase["${var.env}"]}"
   launch_configuration = "${aws_launch_configuration.bastion_lc.name}"
   vpc_zone_identifier  = ["${data.aws_subnet_ids.private_subnets.ids}"]
   load_balancers       = ["${aws_elb.bastion_elb.name}"]
@@ -94,7 +94,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
 }
 
 resource "aws_elb" "bastion_elb" {
-  name = "bastion"
+  name = "bastion-${var.devphase["${var.env}"]}"
 
   security_groups           = ["${data.terraform_remote_state.security_groups.sg_ssh}"]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
