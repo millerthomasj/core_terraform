@@ -1,5 +1,5 @@
 resource "aws_key_pair" "deploy" {
-  key_name   = "deploy"
+  key_name   = "deploy-${var.env}"
   public_key = "${var.env == "stage" || var.env == "prod" ? var.ssh_keys["prod"] : var.ssh_keys["nonprod"]}"
 }
 
