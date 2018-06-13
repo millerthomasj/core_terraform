@@ -16,7 +16,6 @@ node("portals-${ENV}-slave") {
       }
       stage('Make Clean') {
         sh "make clean"
-        sh "make init"
       }
       stage('Make Plan') {
         sh "make plan"
