@@ -55,5 +55,5 @@ output "devphase" {
 }
 
 output "stack" {
-  value = "${var.stack["${var.env}"]}"
+  value = "${var.stack}"
 }

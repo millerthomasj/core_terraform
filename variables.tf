@@ -25,15 +25,4 @@ variable "devphase" {
     prod = "prd"
   }
 }
-
-variable "stack" {
-  type = "map"
-  default = {
-    dev = "tportal"
-    uat = "tportal"
-    qa = "qa"
-    engprod = "tportal"
-    stage = "tportal"
-    prod = "tportal"
-  }
-}
+variable "stack"    { default = "tportal" }
