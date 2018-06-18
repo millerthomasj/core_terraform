@@ -18,22 +18,11 @@ variable "devphase" {
   type = "map"
   default = {
     dev = "dev"
-    enguat = "uat"
-    engqa = "qa"
+    uat = "uat"
+    qa = "qa"
     engprod = "eng"
     stage = "stg"
     prod = "prd"
   }
 }
-
-variable "stack" {
-  type = "map"
-  default = {
-    dev = "tportal"
-    enguat = "tportal"
-    engqa = "qa"
-    engprod = "tportal"
-    stage = "tportal"
-    prod = "tportal"
-  }
-}
+variable "stack"    { default = "tportal" }
