@@ -2,7 +2,7 @@ ifndef ENV
     $(error ENV is undefined, options: dev, uat, qa, engprod, stage, prod)
 endif
 
-%-plan: %-init
+%-plan: $(ENV).tfstate
 	terraform plan \
 		-var-file=../env/$(ENV).tfvars \
 		-state=$(ENV).tfstate
@@ -41,6 +41,10 @@ destroy: $(ENV)-destroy clean
 	mkdir .terraform
 	tfenv install
 	terraform get
+
+%.tfstate: .terraform
+	terraform init \
+		-var-file=../env/$(ENV).tfvars
 
 clean:
 	rm -rf .terraform
