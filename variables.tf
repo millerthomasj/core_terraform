@@ -25,4 +25,5 @@ variable "devphase" {
     prod = "prd"
   }
 }
-variable "stack"    { default = "tportal" }
+variable "stack"                 { default = "tportal" }
+variable "care-portals_dns_zone" { default = "timewarnercable.com" }

@@ -28,3 +28,20 @@ resource "aws_route53_record" "bastion_public" {
   ttl     = "60"
   records = ["${var.bastion_nat_ip}"]
 }
+
+# --------------------------------------------------------------------------------------------------
+# Careportals
+
+resource "aws_route53_zone" "care_portals" {
+  name = "portals-${var.env}.${var.care-portals_dns_zone}"
+  comment = "Zone for hosting names for care portals"
+
+  force_destroy = true
+
+  tags = {
+    "Name"        = "aws-${var.env}.${var.care-portals_dns_zone}"
+    "Terraform"   = "true"
+    "Environment" = "${var.environment}"
+    "Project"     = "portals"
+  }
+}

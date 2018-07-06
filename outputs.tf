@@ -61,3 +61,7 @@ output "devphase" {
 output "stack" {
   value = "${var.stack}"
 }
+
+output "careportals_dns_zone" {
+  value = "${aws_route53_zone.care_portals.name}"
+}
