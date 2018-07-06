@@ -54,7 +54,7 @@ resource "aws_route53_zone" "care_portals" {
   tags = {
     "Name"        = "aws-${var.env}.${var.care-portals_dns_zone}"
     "Terraform"   = "true"
-    "Environment" = "${var.environment}"
+    "Environment" = "${var.env}"
     "Project"     = "portals"
   }
 }
