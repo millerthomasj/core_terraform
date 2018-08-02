@@ -10,6 +10,7 @@ variable "public_subnet_filter"  { default = "portals*elb*" }
 variable "private_subnet_filter" { default = "portals*app*" }
 
 # bastion vars
+variable "instance_type"         { default = "t2.small" }
 variable "bastion_internal"      { default = false }
 variable "bastion_nat_ip"        { default = "" }
 
