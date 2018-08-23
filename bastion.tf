@@ -35,13 +35,13 @@ data "template_file" "bastion_userdata" {
   vars {
     name            = "bastion.${data.template_file.domain.rendered}"
     hostname_prefix = "${var.devphase["${var.env}"]}-${var.stack}-bastion"
-    project         = "${var.project_name}"
+    project         = "${var.project}"
     domain          = "${data.aws_route53_zone.public.name}"
   }
 }
 
 resource "aws_launch_configuration" "bastion_lc" {
-  name_prefix   = "bastion-${var.devphase["${var.env}"]}-"
+  name_prefix   = "${var.env}-bastion-"
   image_id      = "${data.aws_ami.amazonlinux.id}"
   instance_type = "${var.instance_type}"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
@@ -60,8 +60,7 @@ resource "aws_launch_configuration" "bastion_lc" {
 }
 
 resource "aws_autoscaling_group" "bastion_asg" {
-  depends_on           = ["aws_launch_configuration.bastion_lc"]
-  name_prefix          = "bastion-${var.devphase["${var.env}"]}"
+  name                 = "${var.env}-bastion"
   launch_configuration = "${aws_launch_configuration.bastion_lc.name}"
   vpc_zone_identifier  = ["${data.aws_subnet_ids.private_subnets.ids}"]
   load_balancers       = ["${aws_elb.bastion_elb.name}"]
@@ -73,33 +72,23 @@ resource "aws_autoscaling_group" "bastion_asg" {
     create_before_destroy = true
   }
 
-  tag {
-    key                 = "Name"
-    value               = "bastion.${data.template_file.domain.rendered}"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Terraform"
-    value               = true
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Project"
-    value               = "${var.project_name}"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Application"
-    value               = "devops"
-    propagate_at_launch = true
-  }
+  tags = [
+    "${concat(
+         list(
+           map("key", "Terraform", "value", true, "propagate_at_launch", true),
+           map("key", "Name", "value", "bastion.${data.template_file.domain.rendered}", "propagate_at_launch", true),
+           map("key", "Project", "value", "${var.project}", "propagate_at_launch", true),
+           map("key", "Application", "value", "devops", "propagate_at_launch", true),
+           map("key", "Environment", "value", "${var.env}", "propagate_at_launch", true),
+           map("key", "creator", "value", "${var.dl_name}", "propagate_at_launch", true)
+         )
+       )
+    }",
+  ]
 }
 
 resource "aws_elb" "bastion_elb" {
-  name = "bastion-${var.devphase["${var.env}"]}"
+  name = "${var.env}-bastion"
 
   security_groups           = ["${data.terraform_remote_state.security_groups.sg_ssh}"]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
@@ -125,7 +114,7 @@ resource "aws_elb" "bastion_elb" {
   tags {
     Name        = "bastion.${data.template_file.domain.rendered}"
     Terraform   = true
-    Project     = "${var.project_name}"
+    Project     = "${var.project}"
     Application = "devops"
   }
 }

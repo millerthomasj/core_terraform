@@ -3,5 +3,5 @@ data "aws_acm_certificate" "portals_cert_public" {
 }
 
 data "aws_acm_certificate" "portals_cert_private" {
-  domain = "*.${var.project_name}.${var.env}.local"
+  domain = "*.${var.project}.${var.env}.local"
 }

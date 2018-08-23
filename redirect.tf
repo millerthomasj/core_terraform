@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "redirects_bucket" {
   acl    = "public-read"
 
   tags {
-    Project = "${var.project_name}"
+    Project = "${var.project}"
     Enviroment = "${var.env}"
     Terraform = true
     Application = "spectrumtv"

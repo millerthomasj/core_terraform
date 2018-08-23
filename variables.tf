@@ -1,8 +1,9 @@
 # common vars
-variable "project_name"          { default = "portals" }
-variable "bucket"                { }
-variable "region"                { default = "us-east-1" }
-variable "env"                   { }
+variable "project"  { default = "portals" }
+variable "bucket"   { }
+variable "region"   { default = "us-east-1" }
+variable "env"      { }
+variable "dl_name"  { default = "DL-SEDevOps-Portals@charter.com" }
 
 # VPC & subnet vars
 variable "vpc_id"                { }

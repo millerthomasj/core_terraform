@@ -2,7 +2,7 @@ data "template_file" "domain_prod" {
   template = "$${project}.spectrum.net"
 
   vars {
-    project = "${var.project_name}"
+    project = "${var.project}"
   }
 }
 
@@ -10,7 +10,7 @@ data "template_file" "domain_nonprod" {
   template = "$${project}.$${env}-spectrum.net"
 
   vars {
-    project = "${var.project_name}"
+    project = "${var.project}"
     env     = "${var.env}"
   }
 }
@@ -27,7 +27,7 @@ data "template_file" "domain_local" {
   template = "$${project}.$${env}.local"
 
   vars {
-    project = "${var.project_name}"
+    project = "${var.project}"
     env     = "${var.env}"
   }
 }

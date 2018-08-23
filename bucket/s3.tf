@@ -10,6 +10,6 @@ resource "aws_s3_bucket" "state" {
   tags {
     Name = "${var.env} Terraform state bucket"
     Terraform = true
-    Project = "${var.project_name}"
+    Project = "${var.project}"
   }
 }
