@@ -1,32 +1,19 @@
-data "aws_ami" "amazonlinux" {
+data "aws_caller_identity" "current" {}
+
+data "aws_ami" "amazon" {
   most_recent = true
 
-  owners = ["137112412989"]
-
   filter {
-    name   = "architecture"
-    values = ["x86_64"]
+    name   = "tag:Application"
+    values = ["auto_ami"]
   }
 
   filter {
-    name   = "root-device-type"
-    values = ["ebs"]
+    name   = "tag:distro"
+    values = ["amazonlinux"]
   }
 
-  filter {
-    name   = "block-device-mapping.volume-type"
-    values = ["gp2"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-hvm-*"]
-  }
+  owners = ["${data.aws_caller_identity.current.account_id}"]
 }
 
 data "template_file" "bastion_userdata" {
@@ -42,7 +29,7 @@ data "template_file" "bastion_userdata" {
 
 resource "aws_launch_configuration" "bastion_lc" {
   name_prefix   = "${var.env}-bastion-"
-  image_id      = "${data.aws_ami.amazonlinux.id}"
+  image_id      = "${data.aws_ami.amazon.id}"
   instance_type = "${var.instance_type}"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 

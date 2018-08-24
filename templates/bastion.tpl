@@ -4,7 +4,7 @@ packages:
   - gcc
   - python-pip
   - git
-  
+
 runcmd:
   - git clone https://stash.dev-charter.net/stash/scm/portals/ansible.git /etc/ansible
   - echo "${hostname_prefix}-$(curl http://169.254.169.254/latest/meta-data/instance-id).${domain} ansible_group=bastion consul_node_name=bastion-$(curl http://169.254.169.254/latest/meta-data/instance-id)" > /etc/ansible/hosts
