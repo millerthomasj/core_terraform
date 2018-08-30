@@ -1,4 +1,5 @@
 resource "aws_key_pair" "deploy" {
+  count = "${var.env == "qa" || var.env == "engprod" ? 0 : 1}"
   key_name   = "deploy"
   public_key = "${var.env == "stage" || var.env == "prod" ? var.ssh_keys["prod"] : var.ssh_keys["nonprod"]}"
 }
