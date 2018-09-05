@@ -4,13 +4,13 @@ data "aws_ami" "amazon" {
   most_recent = true
 
   filter {
-    name   = "tag:Application"
-    values = ["auto_ami"]
+    name   = "tag:ami"
+    values = ["Amazon-Base"]
   }
 
   filter {
-    name   = "tag:distro"
-    values = ["amazonlinux"]
+    name   = "tag:env"
+    values = ["${var.env}"]
   }
 
   owners = ["${data.aws_caller_identity.current.account_id}"]
