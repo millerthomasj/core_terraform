@@ -31,3 +31,21 @@ data "template_file" "domain_local" {
     env     = "${var.env}"
   }
 }
+
+data "template_file" "domain_prod_sbnet" {
+  template = "$${project}.$${env}-spectrumbusiness.net"
+
+  vars {
+    project = "${var.project}"
+    env     = "${var.env}"
+  }
+}
+
+data "template_file" "domain_nonprod_sbnet" {
+  template = "$${project}.$${env}-spectrumbusiness.net"
+
+  vars {
+    project = "${var.project}"
+    env     = "${var.env}"
+  }
+}
