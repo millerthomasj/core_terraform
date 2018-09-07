@@ -59,17 +59,17 @@ resource "aws_route53_zone" "care_portals" {
   }
 }
 
-
+# --------------------------------------------------------------------------------------------------
 # SpectrumBusiness
 
 resource "aws_route53_zone" "spectrum_business" {
-  name = "portals.${var.env}-${var.sbnet-portals_dns_zone}"
+  name = "${var.env == "prod" ? data.template_file.domain_prod_sbnet.rendered : data.template_file.domain_nonprod_sbnet.rendered}"
   comment = "Zone for hosting names for sbnet portals"
 
   force_destroy = true
 
   tags = {
-    "Name"        = "aws-${var.env}.${var.sbnet-portals_dns_zone}"
+    "Name"        = "${var.env == "prod" ? data.template_file.domain_prod_sbnet.rendered : data.template_file.domain_nonprod_sbnet.rendered}"
     "Terraform"   = "true"
     "Environment" = "${var.env}"
     "Project"     = "portals"
