@@ -33,7 +33,7 @@ data "template_file" "domain_local" {
 }
 
 data "template_file" "domain_prod_sbnet" {
-  template = "$${project}.$${env}-spectrumbusiness.net"
+  template = "$${project}.spectrumbusiness.net"
 
   vars {
     project = "${var.project}"
