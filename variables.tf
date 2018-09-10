@@ -29,3 +29,4 @@ variable "devphase" {
 }
 variable "stack"                 { default = "tportal" }
 variable "care-portals_dns_zone" { default = "timewarnercable.com" }
+variable "sbnet_dns_zone"        { default = "spectrumbusiness.net" }
