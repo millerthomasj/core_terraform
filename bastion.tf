@@ -5,7 +5,7 @@ data "aws_ami" "amazon" {
 
   filter {
     name   = "tag:ami"
-    values = ["Amazon-Base"]
+    values = ["bastion"]
   }
 
   filter {
