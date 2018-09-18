@@ -33,7 +33,7 @@ resource "aws_launch_configuration" "bastion_lc" {
   instance_type = "${var.instance_type}"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
-  iam_instance_profile = "deploy"
+  iam_instance_profile = "SEservice"
   security_groups      = [
       "${data.terraform_remote_state.security_groups.sg_ssh}",
       "${data.terraform_remote_state.security_groups.sg_monitoring}",
