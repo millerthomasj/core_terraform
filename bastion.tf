@@ -1,17 +1,9 @@
 data "aws_caller_identity" "current" {}
 
-data "aws_ami" "amazon" {
+data "aws_ami" "bastion" {
   most_recent = true
 
-  filter {
-    name   = "tag:ami"
-    values = ["bastion"]
-  }
-
-  filter {
-    name   = "tag:env"
-    values = ["${var.env}"]
-  }
+  name_regex = "${var.env}-${var.project}-bastion*"
 
   owners = ["${data.aws_caller_identity.current.account_id}"]
 }
@@ -29,7 +21,7 @@ data "template_file" "bastion_userdata" {
 
 resource "aws_launch_configuration" "bastion_lc" {
   name_prefix   = "${var.env}-bastion-"
-  image_id      = "${data.aws_ami.amazon.id}"
+  image_id      = "${data.aws_ami.bastion.id}"
   instance_type = "${var.instance_type}"
   user_data     = "${data.template_file.bastion_userdata.rendered}"
 
