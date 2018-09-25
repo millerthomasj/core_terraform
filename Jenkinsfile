@@ -1,7 +1,10 @@
-#!groovy
+#!/usr/bin/groovy
 
 @Library('eos-jenkins-shared') _
-def jenkinsCreds = 'a20a062d-348a-4d9b-8db8-458cc76acf16'
+
+terraformRepo = 'ssh://git@stash.dev-charter.net:7999/portals/core_terraform.git'
+repoBranch = params.branch
+jenkinsCreds = 'a20a062d-348a-4d9b-8db8-458cc76acf16'
 
 node("portals-${ENV}-slave") {
   try {
@@ -12,7 +15,7 @@ node("portals-${ENV}-slave") {
       stage('Checkout') {
         currentBuild.displayName = "#${env.BUILD_NUMBER}: ${env.JOB_NAME} - ${ENV}"
         deleteDir()
-        complexCheckout('', 'https://stash.dev-charter.net/stash/scm/portals/core_terraform.git', params.branch, jenkinsCreds)
+        complexCheckout('', terraformRepo, repoBranch, jenkinsCreds)
       }
       stage('Make Clean') {
         sh "make clean"
