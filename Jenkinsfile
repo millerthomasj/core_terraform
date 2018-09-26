@@ -4,7 +4,7 @@
 
 terraformRepo = 'ssh://git@stash.dev-charter.net:7999/portals/core_terraform.git'
 repoBranch = params.branch
-jenkinsCreds = 'a20a062d-348a-4d9b-8db8-458cc76acf16'
+jenkinsCreds = 'af837c04-ad1b-4697-893c-e43342c645ab'
 
 node("portals-${ENV}-slave") {
   try {
