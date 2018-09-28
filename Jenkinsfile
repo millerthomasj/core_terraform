@@ -2,15 +2,17 @@
 
 @Library('eos-jenkins-shared') _
 
-terraformRepo = 'ssh://git@stash.dev-charter.net:7999/portals/core_terraform.git'
+awsAccount = awsUtils.getAccount(ENV)
+gitInfo = gitUtils.getInfo()
+terraformRepo = "${gitInfo.url}/core_terraform.git"
 repoBranch = params.branch
-jenkinsCreds = 'af837c04-ad1b-4697-893c-e43342c645ab'
+jenkinsCreds = gitInfo.jenkinsCreds
 
-node("portals-${ENV}-slave") {
+node(awsAccount.jenkinsNode) {
   try {
     wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
       environment {
-        ENV = '${ENV}'
+        ENV = "${ENV}"
       }
       stage('Checkout') {
         currentBuild.displayName = "#${env.BUILD_NUMBER}: ${env.JOB_NAME} - ${ENV}"
