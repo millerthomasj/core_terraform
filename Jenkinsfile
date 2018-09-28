@@ -2,7 +2,7 @@
 
 @Library('eos-jenkins-shared') _
 
-awsAccount = awsUtils.getAccount(ENV)
+awsAccount = awsUtils.getAccounts(["portals-${ENV}"])
 gitInfo = gitUtils.getInfo()
 terraformRepo = "${gitInfo.url}/core_terraform.git"
 repoBranch = params.branch
