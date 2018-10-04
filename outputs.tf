@@ -65,3 +65,7 @@ output "stack" {
 output "careportals_dns_zone" {
   value = "${aws_route53_zone.care_portals.name}"
 }
+
+output "careportals_cert" {
+  value = "${data.aws_acm_certificate.careportals_cert.*.arn}"
+}
