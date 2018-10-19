@@ -5,6 +5,6 @@ resource "aws_db_subnet_group" "db_subnet_group" {
   tags {	
     Terraform = true
     Project   = "${var.project}"
-    Name      = "${var.project}-${var.env}"
+    Name      = "${var.project}-${var.env}-db_subnet_group"
   }
 }
