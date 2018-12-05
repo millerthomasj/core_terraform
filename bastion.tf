@@ -19,51 +19,30 @@ data "template_file" "bastion_userdata" {
   }
 }
 
-resource "aws_launch_configuration" "bastion_lc" {
-  name_prefix   = "${var.env}-bastion-"
-  image_id      = "${data.aws_ami.bastion.id}"
-  instance_type = "${var.instance_type}"
-  user_data     = "${data.template_file.bastion_userdata.rendered}"
-
-  iam_instance_profile = "SEservice"
-  security_groups      = [
+module "asg" {
+  source                    = "git::https://stash.dev-charter.net/stash/scm/portals/terraform_modules.git//autoscaling"
+  asg_name                  = "${var.env}-bastion"
+  app_name                  = "bastion"
+  app_name_long             = "${var.env}_${var.stack}_bastion"
+  env                       = "${var.env}"
+  dns_zone                  = "${data.template_file.domain.rendered}"
+  desired_capacity          = 1
+  min_size                  = 1
+  max_size                  = 2
+  subnets                   = ["${data.aws_subnet_ids.private_subnets.ids}"]
+  image_id                  = "${data.aws_ami.bastion.id}"
+  instance_type             = "${var.instance_type}"
+  iam_instance_profile      = "SEservice"
+  key_name                  = "deploy"
+  security_groups           = [
       "${data.terraform_remote_state.security_groups.sg_ssh}",
       "${data.terraform_remote_state.security_groups.sg_monitoring}",
       "${data.terraform_remote_state.security_groups.sg_consul}"
   ]
-  key_name             = "deploy"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_autoscaling_group" "bastion_asg" {
-  name                 = "${var.env}-bastion"
-  launch_configuration = "${aws_launch_configuration.bastion_lc.name}"
-  vpc_zone_identifier  = ["${data.aws_subnet_ids.private_subnets.ids}"]
-  load_balancers       = ["${aws_elb.bastion_elb.name}"]
-  min_size             = 1
-  max_size             = 1
-  desired_capacity     = 1
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags = [
-    "${concat(
-         list(
-           map("key", "Terraform", "value", true, "propagate_at_launch", true),
-           map("key", "Name", "value", "bastion.${data.template_file.domain.rendered}", "propagate_at_launch", true),
-           map("key", "Project", "value", "${var.project}", "propagate_at_launch", true),
-           map("key", "Application", "value", "devops", "propagate_at_launch", true),
-           map("key", "Environment", "value", "${var.env}", "propagate_at_launch", true),
-           map("key", "creator", "value", "${var.dl_name}", "propagate_at_launch", true)
-         )
-       )
-    }",
-  ]
+  user_data                 = "${data.template_file.bastion_userdata.rendered}"
+  load_balancers            = ["${aws_elb.bastion_elb.name}"]
+  template_path             = "templates/bastion.tpl"
+  protect_from_scale_in     = false
 }
 
 resource "aws_elb" "bastion_elb" {
@@ -94,6 +73,7 @@ resource "aws_elb" "bastion_elb" {
     Name        = "bastion.${data.template_file.domain.rendered}"
     Terraform   = true
     Project     = "${var.project}"
-    Application = "devops"
+    Application = "bastion"
+    creator     = "DL-SEDevOps-Portals@charter.com"
   }
 }
