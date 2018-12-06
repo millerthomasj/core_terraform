@@ -73,3 +73,7 @@ output "careportals_cert" {
 output "db_subnet_group" {
   value = "${aws_db_subnet_group.db_subnet_group.id}"
 }
+
+output "deploy_key" {
+  value = "aws_key_pair.portals_deploy.key_name}"
+}
