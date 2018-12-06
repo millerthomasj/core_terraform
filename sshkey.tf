@@ -4,6 +4,11 @@ resource "aws_key_pair" "deploy" {
   public_key = "${var.env == "stage" || var.env == "prod" ? var.ssh_keys["prod"] : var.ssh_keys["nonprod"]}"
 }
 
+resource "aws_key_pair" "portals_deploy" {
+  key_name   = "${var.env}_deploy"
+  public_key = "${var.env == "stage" || var.env == "prod" ? var.ssh_keys["prod"] : var.ssh_keys["nonprod"]}"
+}
+
 variable "ssh_keys" {
   type = "map"
 
