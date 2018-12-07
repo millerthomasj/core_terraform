@@ -43,6 +43,10 @@ module "asg" {
   load_balancers            = ["${aws_elb.bastion_elb.name}"]
   template_path             = "templates/bastion.tpl"
   protect_from_scale_in     = false
+
+  use_schedule              = 1
+  recurrence_scale_out      = "0 1 * * SAT"
+  recurrence_scale_in       = "15 1 * * SAT"
 }
 
 resource "aws_elb" "bastion_elb" {
