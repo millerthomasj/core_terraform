@@ -46,7 +46,7 @@ module "asg" {
 
   use_schedule              = 1
   recurrence_scale_out      = "0 1 * * SAT"
-  recurrence_scale_in       = "15 1 * * SAT"
+  recurrence_scale_in       = "30 1 * * SAT"
 }
 
 resource "aws_elb" "bastion_elb" {
