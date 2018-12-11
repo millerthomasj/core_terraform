@@ -50,10 +50,6 @@ output "web_traffic_sgs" {
   value = ["${data.terraform_remote_state.security_groups.sg_web}"]
 }
 
-output "bastion_dns_name" {
-  value = "${aws_elb.bastion_elb.dns_name}"
-}
-
 output "devphase" {
   value = "${var.devphase["${var.env}"]}"
 }

@@ -2,6 +2,13 @@ ifndef ENV
     $(error ENV is undefined, options: dev, uat, qa, engprod, stage, prod)
 endif
 
+ifeq ($(ENV),stage)
+	mv bastion.tf bastion.no
+endif
+ifeq ($(ENV),prod)
+	mv bastion.tf bastion.no
+endif
+
 plan: $(ENV)-plan
 
 refresh: $(ENV)-refresh
