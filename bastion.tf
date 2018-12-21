@@ -15,7 +15,7 @@ data "template_file" "bastion_userdata" {
     name            = "bastion.${data.template_file.domain.rendered}"
     hostname_prefix = "${var.devphase["${var.env}"]}-${var.stack}-bastion"
     project         = "${var.project}"
-    domain          = "${data.aws_route53_zone.public.name}"
+    domain          = "${aws_route53_zone.public.name}"
   }
 }
 
@@ -85,7 +85,7 @@ resource "aws_elb" "bastion_elb" {
 
 resource "aws_route53_record" "bastion_local" {
   name    = "bastion"
-  zone_id = "${data.aws_route53_zone.local.zone_id}"
+  zone_id = "${aws_route53_zone.local.zone_id}"
   type    = "A"
 
   alias {
@@ -98,7 +98,7 @@ resource "aws_route53_record" "bastion_local" {
 # CSE's Palo Router cannot resolve internal VPC DNS
 resource "aws_route53_record" "bastion_internal_public" {
   name    = "bastion-internal"
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
+  zone_id = "${aws_route53_zone.public.zone_id}"
   type    = "A"
 
   alias {
@@ -110,7 +110,7 @@ resource "aws_route53_record" "bastion_internal_public" {
 
 resource "aws_route53_record" "bastion_public" {
   name    = "bastion"
-  zone_id = "${data.aws_route53_zone.public.zone_id}"
+  zone_id = "${aws_route53_zone.public.zone_id}"
   type    = "A"
   ttl     = "60"
   records = ["${var.bastion_nat_ip}"]

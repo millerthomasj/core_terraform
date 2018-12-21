@@ -1,12 +1,5 @@
 ifndef ENV
-    $(error ENV is undefined, options: dev, uat, qa, engprod, stage, prod)
-endif
-
-ifeq ($(ENV),stage)
-	mv bastion.tf bastion.no
-endif
-ifeq ($(ENV),prod)
-	mv bastion.tf bastion.no
+  $(error ENV is undefined, options: dev, uat, qa, engprod, stage, prod)
 endif
 
 plan: $(ENV)-plan
@@ -20,6 +13,12 @@ plandestroy: $(ENV)-plandestroy
 destroy: $(ENV)-destroy clean
 
 %-plan: .terraform/terraform.tfstate
+ifeq ($(ENV),stage)
+	mv bastion.tf bastion.no
+endif
+ifeq ($(ENV),prod)
+	mv bastion.tf bastion.no
+endif
 	terraform plan \
 		-var-file=backend/$(*).tfvars \
 		-var-file=env/$(*).tfvars \
