@@ -1,11 +1,33 @@
-data "aws_route53_zone" "local" {
-  name         = "${data.template_file.domain_local.rendered}."
-  private_zone = true
+resource "aws_route53_zone" "local" {
+  name = "${data.template_file.domain_local.rendered}."
+  comment = "Zone for hosting all local portals apps."
+
+  force_destroy = true
+
+  vpc {
+    vpc_id = "${var.vpc_id}"
+  }
+
+  tags = {
+    "Name"        = "${data.template_file.domain_local.rendered}"
+    "Terraform"   = "true"
+    "Environment" = "${var.env}"
+    "Project"     = "portals"
+  }
 }
 
-data "aws_route53_zone" "public" {
-  name         = "${data.template_file.domain.rendered}."
-  private_zone = false
+resource "aws_route53_zone" "public" {
+  name = "${data.template_file.domain.rendered}."
+  comment = "Zone for hosting all external portals apps."
+
+  force_destroy = true
+
+  tags = {
+    "Name"        = "${data.template_file.domain.rendered}."
+    "Terraform"   = "true"
+    "Environment" = "${var.env}"
+    "Project"     = "portals"
+  }
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -18,7 +40,7 @@ resource "aws_route53_zone" "care_portals" {
   force_destroy = true
 
   tags = {
-    "Name"        = "aws-${var.env}.${var.care-portals_dns_zone}"
+    "Name"        = "portals-${var.env}.${var.care-portals_dns_zone}"
     "Terraform"   = "true"
     "Environment" = "${var.env}"
     "Project"     = "portals"

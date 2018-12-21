@@ -3,11 +3,11 @@ output "vpc_id" {
 }
 
 output "route53_zone_local" {
-  value = "${data.aws_route53_zone.local.name}"
+  value = "${aws_route53_zone.local.name}"
 }
 
 output "route53_zone_local_id" {
-  value = "${data.aws_route53_zone.local.zone_id}"
+  value = "${aws_route53_zone.local.zone_id}"
 }
 
 output "private_dns_zone" {
@@ -27,7 +27,7 @@ output "dns_zone" {
 }
 
 output "route53_zone_public_id" {
-  value = "${data.aws_route53_zone.public.zone_id}"
+  value = "${aws_route53_zone.public.zone_id}"
 }
 
 output "private_subnet_ids" {
