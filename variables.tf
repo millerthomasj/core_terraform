@@ -12,6 +12,7 @@ variable "private_subnet_filter" { default = "portals*app*" }
 
 # bastion vars
 variable "instance_type"         { default = "t2.small" }
+variable "deploy_key_name"       { default = "deploy" }
 variable "bastion_internal"      { default = false }
 variable "bastion_nat_ip"        { default = "" }
 

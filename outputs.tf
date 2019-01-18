@@ -71,5 +71,5 @@ output "db_subnet_group" {
 }
 
 output "deploy_key" {
-  value = "${aws_key_pair.portals_deploy.key_name}"
+  value = "${var.deploy_key_name}"
 }

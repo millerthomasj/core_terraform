@@ -34,7 +34,7 @@ module "asg" {
   image_id                  = "${data.aws_ami.bastion.id}"
   instance_type             = "${var.instance_type}"
   iam_instance_profile      = "SEservice"
-  key_name                  = "${aws_key_pair.portals_deploy.key_name}"
+  key_name                  = "${var.deploy_key_name}"
   security_groups           = [
       "${data.terraform_remote_state.security_groups.sg_ssh}",
       "${data.terraform_remote_state.security_groups.sg_monitoring}",
