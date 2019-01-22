@@ -63,7 +63,7 @@ output "careportals_dns_zone" {
 }
 
 output "careportals_cert" {
-  value = "${data.aws_acm_certificate.careportals_cert.*.arn}"
+  value = "${join(",",data.aws_acm_certificate.careportals_cert.*.arn)}"
 }
 
 output "db_subnet_group" {
