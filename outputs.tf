@@ -73,3 +73,7 @@ output "db_subnet_group" {
 output "deploy_key" {
   value = "${var.deploy_key_name}"
 }
+
+output "current_instances" {
+  value = "${var.current_instances}"
+}
