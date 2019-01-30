@@ -13,11 +13,8 @@ plandestroy: $(ENV)-plandestroy
 destroy: $(ENV)-destroy clean
 
 %-plan: .terraform/terraform.tfstate
-ifeq ($(ENV),stage)
-	mv bastion.tf bastion.no
-endif
-ifeq ($(ENV),prod)
-	mv bastion.tf bastion.no
+ifneq (,$(filter stage prod,$(ENV)))
+	[[ -e bastion.tf ]] && mv bastion.tf bastion.no
 endif
 	terraform plan \
 		-var-file=backend/$(*).tfvars \
@@ -52,6 +49,10 @@ endif
 	terraform get
 
 clean:
+ifneq (,$(filter stage prod,$(ENV)))
+	rm -f bastion.no
+	git checkout -- bastion.tf
+endif
 	rm -f *.plan
 	rm -f *.backup
 	rm -rf .terraform
