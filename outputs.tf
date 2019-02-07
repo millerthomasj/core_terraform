@@ -59,11 +59,7 @@ output "stack" {
 }
 
 output "careportals_dns_zone" {
-  value = "${aws_route53_zone.care_portals.name}"
-}
-
-output "careportals_cert" {
-  value = "${join(",",data.aws_acm_certificate.careportals_cert.*.arn)}"
+  value = "${data.template_file.domain_careportals.rendered}"
 }
 
 output "db_subnet_group" {

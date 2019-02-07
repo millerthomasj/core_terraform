@@ -31,33 +31,33 @@ resource "aws_route53_zone" "public" {
 }
 
 # --------------------------------------------------------------------------------------------------
-# Careportals
+# the app-specific entries below are here to address the chicken & egg scenario of
+# needing a subdomain to exist to be able to create NS entries in the parent domain
 
+# Careportals
 resource "aws_route53_zone" "care_portals" {
-  name = "portals-${var.env}.${var.care-portals_dns_zone}"
+  name = "${data.template_file.domain_careportals.rendered}"
   comment = "Zone for hosting names for care portals"
 
   force_destroy = true
 
   tags = {
-    "Name"        = "portals-${var.env}.${var.care-portals_dns_zone}"
+    "Name"        = "${data.template_file.domain_careportals.rendered}"
     "Terraform"   = "true"
     "Environment" = "${var.env}"
     "Project"     = "portals"
   }
 }
 
-# --------------------------------------------------------------------------------------------------
 # SpectrumBusiness
-
 resource "aws_route53_zone" "spectrum_business" {
-  name = "${var.env == "prod" ? data.template_file.domain_prod_sbnet.rendered : data.template_file.domain_nonprod_sbnet.rendered}"
+  name = "${data.template_file.domain_sbnet.rendered}."
   comment = "Zone for hosting names for sbnet portals"
 
   force_destroy = true
 
   tags = {
-    "Name"        = "${var.env == "prod" ? data.template_file.domain_prod_sbnet.rendered : data.template_file.domain_nonprod_sbnet.rendered}"
+    "Name"        = "${data.template_file.domain_sbnet.rendered}"
     "Terraform"   = "true"
     "Environment" = "${var.env}"
     "Project"     = "portals"
