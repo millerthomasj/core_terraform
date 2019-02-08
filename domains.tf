@@ -32,6 +32,14 @@ data "template_file" "domain_local" {
   }
 }
 
+data "template_file" "domain_careportals" {
+  template = "$${domain}"
+
+  vars {
+    domain = "portals-${var.env}.${var.careportals_dns_zone}"
+  }
+}
+
 data "template_file" "domain_prod_sbnet" {
   template = "$${project}.$${domain}"
 
@@ -48,5 +56,13 @@ data "template_file" "domain_nonprod_sbnet" {
     project = "${var.project}"
     env     = "${var.env}"
     domain  = "${var.sbnet_dns_zone}"
+  }
+}
+
+data "template_file" "domain_sbnet" {
+  template = "$${domain}"
+
+  vars {
+    domain = "${var.env == "prod" ? data.template_file.domain_prod_sbnet.rendered : data.template_file.domain_nonprod_sbnet.rendered}"
   }
 }
