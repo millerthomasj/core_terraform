@@ -17,8 +17,9 @@ variable "current_instances" {
     # m-class medium instances were phased out with m4.
     # m3.medium is the last m.medium instance available
     m_medium = "m3.medium"
-    m_large = "m5.large"
-    m_xlarge = "m5.xlarge"
+    # m5 not available in us-east-1 as of March 19
+    m_large = "m4.large"
+    m_xlarge = "m4.xlarge"
     cache_small = "cache.t2.small"
     cache_medium = "cache.t2.medium"
     cache_large = "cache.m5.large"
