@@ -22,13 +22,13 @@ variable "current_instances" {
     m_xlarge = "m4.xlarge"
     cache_small = "cache.t2.small"
     cache_medium = "cache.t2.medium"
-    cache_large = "cache.m5.large"
+    cache_large = "cache.m4.large"
     # cache.m4.xlarge costs the same as m5 but with more RAM for caching
     cache_xlarge = "cache.m4.xlarge"
     db_small = "db.t2.small"
     db_medium = "db.t2.medium"
-    db_large = "db.m5.large"
-    db_xlarge = "db.m5.xlarge"
+    db_large = "db.m4.large"
+    db_xlarge = "db.m4.xlarge"
   }
 }
 
