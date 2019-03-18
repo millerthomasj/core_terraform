@@ -16,6 +16,7 @@ data "template_file" "bastion_userdata" {
     hostname_prefix = "${var.devphase["${var.env}"]}-${var.stack}-bastion"
     project         = "${var.project}"
     domain          = "${aws_route53_zone.public.name}"
+    env             = "${var.env}"
   }
 }
 
