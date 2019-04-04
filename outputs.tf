@@ -66,6 +66,10 @@ output "db_subnet_group" {
   value = "${aws_db_subnet_group.db_subnet_group.id}"
 }
 
+output "ec_subnet_group" {
+  value = "${aws_elasticache_subnet_group.ec_subnet_group.name}"
+}
+
 output "deploy_key" {
   value = "${var.deploy_key_name}"
 }
