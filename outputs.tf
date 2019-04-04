@@ -66,7 +66,7 @@ output "db_subnet_group" {
   value = "${aws_db_subnet_group.db_subnet_group.id}"
 }
 
-output "aws_elasticache_subnet_group" {
+output "ec_subnet_group" {
   value = "${aws_elasticache_subnet_group.ec_subnet_group.name}"
 }
 
