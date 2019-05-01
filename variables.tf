@@ -29,6 +29,7 @@ variable "current_instances" {
     db_medium = "db.t2.medium"
     db_large = "db.m4.large"
     db_xlarge = "db.m4.xlarge"
+    db_2xlarge = "db.m4.2xlarge"
   }
 }
 
