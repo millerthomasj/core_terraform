@@ -1,0 +1,46 @@
+{
+  "id": "devops-endpoints",
+  "purpose": "connectivity check",
+  "endpoints":[
+    {
+      "service":"Stash",
+      "company":"CHTR",
+      "url": "stash.dev-charter.net",
+      "port": [443,7999],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
+      "service":"Gitlab - Product",
+      "company":"CHTR",
+      "url": "gitlab.spectrumxg.com",
+      "port": [443,22],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
+      "service":"Gitlab - Portal Ops",
+      "company":"CHTR",
+      "url": "gitlab.meta.spectrum.net",
+      "port": [443,22],
+      "includeCheck":"false",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
+      "service":"Bitbucket - IT",
+      "company":"CHTR",
+      "url": "git.corp.chartercom.com",
+      "port": [443,7999],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    }
+  ]
+}
