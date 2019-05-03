@@ -36,7 +36,7 @@
       "service":"Bitbucket - IT",
       "company":"CHTR",
       "url": "git.corp.chartercom.com",
-      "port": [443,7999],
+      "port": [7999],
       "includeCheck":"true",
       "contact":"",
       "network":"red",
