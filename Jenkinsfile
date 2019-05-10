@@ -1,13 +1,7 @@
 #!/usr/bin/groovy
 
-library "eos-jenkins-shared"
+library 'portals-shared-library'
 
-project = 'portals'
-if (params.VPC) {
-  project = 'eos'
-}
-
-terraformApply(env: params.env,
-               project: project,
-               branch: params.branch,
-               repo: gitUtils.getInfo(project).url + '/core_terraform.git')
+terraformUtils.apply(env: params.env,
+                     repo: gitUtils.getInfo('portals').url + '/core_terraform.git',
+                     branch: params.branch)
