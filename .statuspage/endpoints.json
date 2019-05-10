@@ -45,7 +45,7 @@
     {
       "service":"Nexus - CSE",
       "company":"CHTR",
-      "url": "nexus.global.dev-charter.net
+      "url": "nexus.global.dev-charter.net",
       "port": [8081],
       "includeCheck":"true",
       "contact":"",
