@@ -4,4 +4,5 @@ data "aws_acm_certificate" "portals_cert_public" {
 
 data "aws_acm_certificate" "portals_cert_private" {
   domain = "*.${var.project}.${var.env}.local"
+  most_recent = true
 }
