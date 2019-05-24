@@ -39,7 +39,8 @@ module "asg" {
   security_groups           = [
       "${data.terraform_remote_state.security_groups.sg_ssh}",
       "${data.terraform_remote_state.security_groups.sg_monitoring}",
-      "${data.terraform_remote_state.security_groups.sg_consul}"
+      "${data.terraform_remote_state.security_groups.sg_consul}",
+      "${data.terraform_remote_state.security_groups.sg_db_client}"
   ]
   user_data                 = "${data.template_file.bastion_userdata.rendered}"
   load_balancers            = ["${aws_elb.bastion_elb.name}"]
