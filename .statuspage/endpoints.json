@@ -27,7 +27,7 @@
       "company":"CHTR",
       "url": "gitlab.meta.spectrum.net",
       "port": [443,22],
-      "includeCheck":"false",
+      "includeCheck":"true",
       "contact":"",
       "network":"red",
       "environment":["dev","qa","engprod","uat","stage","prod"]
