@@ -3,7 +3,7 @@
   "purpose": "connectivity check",
   "endpoints":[
     {
-      "service":"Stash",
+      "service":"Stash - CSE",
       "company":"CHTR",
       "url": "stash.dev-charter.net",
       "port": [443,7999],
@@ -47,6 +47,16 @@
       "company":"CHTR",
       "url": "nexus.global.dev-charter.net",
       "port": [8081],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
+      "service":"Artifactory - CSE",
+      "company":"CHTR",
+      "url": "artifactory.charterdev-global.net",
+      "port": [443],
       "includeCheck":"true",
       "contact":"",
       "network":"red",

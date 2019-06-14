@@ -15,6 +15,12 @@
       "environment": ["dev","uat","qa","engprod","stage","prod"]
     },
     {
+      "display": "CSE Artifactory - artifactory.charterdev-global.net",
+      "url": "https://artifactory.charterdev-global.net/artifactory/webapp/",
+      "return": "200",
+      "environment": ["dev","uat","qa","engprod","stage","prod"]
+    },
+    {
       "display": "Product Gitlab - gitlab.spectrumxg.com",
       "url": "https://gitlab.spectrumxg.com/users/sign_in",
       "return": "200",
