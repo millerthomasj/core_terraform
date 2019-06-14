@@ -1,0 +1,30 @@
+{
+  "id": "devops-urls",
+  "purpose": "url checks",
+  "urls":[
+    {
+      "display": "CSE Stash - stash.dev-charter.net",
+      "url": "https://stash.dev-charter.net/stash/repos?visibility=public",
+      "return": "200",
+      "environment": ["dev","uat","qa","engprod","stage","prod"]
+    },
+    {
+      "display": "CSE Nexus - nexus.dev-charter.net",
+      "url": "http://nexus.global.dev-charter.net/nexus/",
+      "return": "200",
+      "environment": ["dev","uat","qa","engprod","stage","prod"]
+    },
+    {
+      "display": "Product Gitlab - gitlab.spectrumxg.com",
+      "url": "https://gitlab.spectrumxg.com/users/sign_in",
+      "return": "200",
+      "environment": ["dev","uat","qa","engprod","stage","prod"]
+    },
+    {
+      "display": "PortalOps Gitlab - gitlab.meta.spectrum.net",
+      "url": "https://gitlab.meta.spectrum.net/users/sign_in",
+      "return": "302",
+      "environment": ["dev","uat","qa","engprod","stage","prod"]
+    }
+  ]
+}
