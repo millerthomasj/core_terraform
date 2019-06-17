@@ -16,7 +16,7 @@
     },
     {
       "display": "CSE Artifactory - artifactory.charterdev-global.net",
-      "url": "https://artifactory.charterdev-global.net/artifactory/webapp/",
+      "url": "http://artifactory.charterdev-global.net/artifactory/webapp/",
       "return": "200",
       "environment": ["dev","uat","qa","engprod","stage","prod"]
     },
