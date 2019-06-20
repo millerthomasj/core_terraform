@@ -15,8 +15,8 @@
       "environment": ["dev","uat","qa","engprod","stage","prod"]
     },
     {
-      "display": "CSE Artifactory - artifactory.charterdev-global.net",
-      "url": "http://artifactory.charterdev-global.net/artifactory/webapp/",
+      "display": "CSE Artifactory - artifactory.se-charter.net",
+      "url": "https://artifactory.se-charter.net/artifactory/webapp/"
       "return": "200",
       "environment": ["dev","uat","qa","engprod","stage","prod"]
     },
