@@ -39,7 +39,12 @@ endif
 	terraform apply $(*)-destroy.plan
 
 .terraform/terraform.tfstate: .terraform
+ifeq ($(ENV),prod)
+	vault login -address=https://vault.portals.$(ENV).local -method=aws header_value=portals.spectrum.net role=jenkins_jnlp_slave
+else
 	vault login -address=https://vault.portals.$(ENV).local -method=aws header_value=portals.$(ENV)-spectrum.net role=jenkins_jnlp_slave
+endif
+	
 	terraform init \
 		-backend-config=backend/$(ENV).tfvars \
 		-var-file=env/$(ENV).tfvars
