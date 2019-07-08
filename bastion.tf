@@ -21,7 +21,7 @@ data "template_file" "bastion_userdata" {
 }
 
 module "asg" {
-  source                    = "git::https://stash.dev-charter.net/stash/scm/portals/terraform_modules.git//elastigroup"
+  source                    = "git::https://stash.dev-charter.net/stash/scm/portals/terraform_modules.git//autoscaling"
   bluegreen                 = 0
   asg_name                  = "${var.env}-bastion"
   app_name                  = "bastion"
