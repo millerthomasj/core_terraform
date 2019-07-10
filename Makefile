@@ -16,6 +16,17 @@ destroy: $(ENV)-destroy clean
 ifneq (,$(filter stage prod,$(ENV)))
 	[[ -e bastion.tf ]] && mv bastion.tf bastion.no
 endif
+
+	terraform state rm provider.vault \
+		-var-file=backend/$(ENV).tfvars \
+		-var-file=env/$(ENV).tfvars
+	terraform state rm module.asg.data.vault_generic_secret.spotinst_token \
+		-var-file=backend/$(ENV).tfvars \
+		-var-file=env/$(ENV).tfvars
+	terraform state rm module.asg.data.vault_generic_secret.spotinst_account \
+		-var-file=backend/$(ENV).tfvars \
+		-var-file=env/$(ENV).tfvars
+
 	terraform plan \
 		-var-file=backend/$(*).tfvars \
 		-var-file=env/$(*).tfvars \
