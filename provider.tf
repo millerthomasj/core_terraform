@@ -17,7 +17,3 @@ data "terraform_remote_state" "security_groups" {
     region = "${var.region}"
   }
 }
-
-provider "vault" {
-  address = "https://vault.portals.${var.env}.local"
-}
