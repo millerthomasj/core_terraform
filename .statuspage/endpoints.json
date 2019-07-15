@@ -23,6 +23,16 @@
       "environment":["dev","qa","engprod","uat","stage","prod"]
     },
     {
+      "service":"Artifactory - Product",
+      "company":"CHTR",
+      "url": "artifactory.spectrumtoolbox.com",
+      "port": [443],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
       "service":"Gitlab - Portal Ops",
       "company":"CHTR",
       "url": "gitlab.meta.spectrum.net",
