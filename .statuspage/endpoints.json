@@ -71,6 +71,16 @@
       "contact":"",
       "network":"red",
       "environment":["dev","qa","engprod","uat","stage","prod"]
+    },
+    {
+      "service":"Twistlock - CSE",
+      "company":"CHTR",
+      "url": "twistlock.eng-charter.net",
+      "port": [443],
+      "includeCheck":"true",
+      "contact":"",
+      "network":"red",
+      "environment":["dev","qa","engprod","uat"]
     }
   ]
 }
