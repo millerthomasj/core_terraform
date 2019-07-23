@@ -37,6 +37,12 @@
       "url": "https://gitlab.meta.spectrum.net/users/sign_in",
       "return": "302",
       "environment": ["dev","uat","qa","engprod","stage","prod"]
+    },
+    {
+      "display": "CSE Twistlock - twistlock.eng-charter.net",
+      "url": "https://twistlock.eng-charter.net/#/login",
+      "return": "200",
+      "environment": ["dev","uat","qa","engprod"]
     }
   ]
 }
