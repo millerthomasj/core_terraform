@@ -54,7 +54,7 @@ module "asg" {
 resource "aws_elb" "bastion_elb" {
   name = "${var.env}-bastion"
 
-  security_groups           = ["${data.terraform_remote_state.security_groups.sg_ssh}"]
+  security_groups           = ["${data.terraform_remote_state.security_groups.sg_ssh}","${data.terraform_remote_state.security_groups.sg_db_client}"]
   subnets                   = ["${data.aws_subnet_ids.public_subnets.ids}"]
   internal                  = "${var.bastion_internal}"
   cross_zone_load_balancing = true
